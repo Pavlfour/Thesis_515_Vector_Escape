@@ -131,8 +131,8 @@ void Beamlok::updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health
         distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
         sf::Vector2f movement = (direction / distance) * speed;
-        
-        if (distance <= speed || distance <= 1.f)
+
+        if (distance <= speed)
             forward = !forward;
         else
             beamlokPos += movement;

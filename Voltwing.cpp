@@ -47,7 +47,7 @@ bool Voltwing::updateVoltwing(Bitron& bitron)
     direction = target - voltwingPos;
     distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-    if (distance <= speed  || distance <= 1.f)
+    if (distance <= speed)
     {
         voltwingPos = target;
         // Επόμενο σημείο
