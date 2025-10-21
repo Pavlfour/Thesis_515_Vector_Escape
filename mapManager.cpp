@@ -1,0 +1,364 @@
+#include "headers/mapManager.hpp"
+#include "mapDetailsHandler.cpp"
+
+mapManager::mapManager(std::shared_ptr<Sounds> sound):
+sound(sound)
+{
+    currentMapIndex = 0;
+    coinCounter = 0;
+
+    // Φορτώνουμε τις εικόνες
+    if(!blueTileTexture.loadFromFile("assets/sprites/blue.png") || !redTileTexture.loadFromFile("assets/sprites/red.png")
+    || !exitTileTexture.loadFromFile("assets/sprites/exit.png") || !triggerTileTexture.loadFromFile("assets/sprites/trigger.png")
+    || !backgroundTexture.loadFromFile("assets/sprites/background.png"))
+    {
+        throw std::runtime_error("Failed to load textures");
+    }
+
+
+    // Background Image
+    backgroundSprite = std::make_unique<sf::Sprite>(backgroundTexture);
+
+
+    // dummy
+    fillingSprite = std::make_unique<sf::Sprite>(blueTileTexture);
+
+    // Money!!
+    // Open a new font
+    font = std::make_unique<sf::Font>("assets/fonts/NES.ttf");
+    coinText = std::make_unique<sf::Text>(*font);
+
+    // Tutorial text
+    tutorialText = std::make_unique<sf::Text>(*font);
+    tutorialText->setFillColor(sf::Color::Black);
+    tutorialText->setOutlineThickness(2.f);
+    tutorialText->setOutlineColor(sf::Color::White);
+    tutorialText->setCharacterSize(18);
+    tutorialText->setLineSpacing(1.5f);
+    tutorialText->setString("USE THE ARROW KEYS TO NAVIGATE\nHOLD THE UP KEY FOR LONGER JUMPS!\nAVOID RED TILES TO PREVENT LOSING HEALTH!!");
+    tutorialText->setPosition({150.f,150.f});
+
+
+    coinText->setFillColor(sf::Color{72,114,225});
+    coinText->setOutlineThickness(1.5f);
+    coinText->setOutlineColor(sf::Color::Black);
+    coinText->setCharacterSize(16);
+    coinText->setString("COINS:"+std::to_string(coinCounter));
+
+    // Αρχικοποίηση των πιστών στην λίστα
+    convertMap(maps::map1);
+    convertMap(maps::map2);
+    convertMap(maps::map3);
+    convertMap(maps::map4);
+    convertMap(maps::map5);
+    convertMap(maps::map6);
+    convertMap(maps::map7);
+    convertMap(maps::map8);
+    convertMap(maps::map9);
+
+    // Μόνο για την πρώτη πίστα
+    currentMapHeight = mapPool[currentMapIndex].size();
+    currentMapWidth = mapPool[currentMapIndex][0].size();
+    mapPixelWidth = currentMapWidth * cellSize;
+    mapPixelHeight = currentMapHeight * cellSize;
+
+
+}
+
+
+void mapManager::addVoltwing(std::initializer_list<sf::Vector2f> points, float speed)
+{
+    voltwings.emplace_back(std::make_unique<Voltwing>(
+        std::vector<sf::Vector2f>(points),
+        speed,
+        sound
+    ));
+}
+
+
+void mapManager::addLinearPlatform(sf::Vector2f startPos,sf::Vector2f endPos,float speed)
+{
+    platforms.push_back(std::make_unique<linearPlatform>(startPos,endPos,speed));
+}
+
+void mapManager::addCircularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool clockwise,float startAngle)
+{
+    platforms.push_back(std::make_unique<circularPlatform>(circleCenter,radius,speed,clockwise,startAngle));
+}
+
+void mapManager::addBeamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed)
+{
+    beamloks.emplace_back(std::make_unique<Beamlok>(startPos,endPos,speed,sound));
+}
+
+void mapManager::addCoin(float posX,float posY)
+{
+    coins.emplace_back(std::make_unique<coin>(posX,posY));
+}
+
+
+
+void mapManager::convertMap(std::vector<std::vector<unsigned short>> map)
+{
+    std::vector<std::vector<Cell>> convertedMap;
+
+    for(const auto& row: map)
+    {
+        std::vector<Cell> newRow;
+        for(const unsigned short tile: row)
+        {
+            switch (tile)
+            {
+                case 1:
+                    newRow.push_back(BlueTile);
+                    break;
+                case 2:
+                    newRow.push_back(RedTile);
+                    break;
+                case 3:
+                    newRow.push_back(TriggerTile);
+                    break;
+                case 4:
+                    newRow.push_back(ExitTile);
+                    break;
+                default:
+                    newRow.push_back(Empty);
+                    break;
+            }
+        }
+        convertedMap.push_back(newRow);
+    }
+
+    mapPool.push_back(convertedMap);
+}
+
+
+
+void mapManager::drawMap(sf::RenderWindow& window)
+{
+    // Background
+    window.draw(*backgroundSprite);
+
+    // Έχει γίνει optimization για να ζωγραφίζονται μόνο τα τετράγωνα που είναι στην κεντρική οθόνη
+    for (unsigned short a = floor((centerY - viewSize.y/2.f) / static_cast<float>(cellSize)); a < ceil((viewSize.y/2.f + centerY) / static_cast<float>(cellSize)); a++)
+    {
+        for (unsigned short b = floor((centerX - viewSize.x/2.f) / static_cast<float>(cellSize)); b < ceil((viewSize.x/2.f + centerX) / static_cast<float>(cellSize)); b++)
+        {
+            if (mapPool[currentMapIndex][a][b] == Cell::Empty)
+                continue;
+            else if(mapPool[currentMapIndex][a][b] == Cell::BlueTile)
+                fillingSprite->setTexture(blueTileTexture);
+            else if(mapPool[currentMapIndex][a][b] == Cell::TriggerTile)
+                fillingSprite->setTexture(triggerTileTexture);
+            else if(mapPool[currentMapIndex][a][b] == Cell::ExitTile)
+                fillingSprite->setTexture(exitTileTexture);
+            else
+                fillingSprite->setTexture(redTileTexture);
+
+            fillingSprite->setPosition({static_cast<float>(b * cellSize), static_cast<float>(a * cellSize)});
+            window.draw(*fillingSprite);
+        }
+    }
+
+    for(auto& plat : platforms)
+    {
+        plat->drawPlatform(window);
+    }
+
+    for(auto& coin : coins)
+    {
+        coin->drawCoin(window);
+    }
+
+    for(auto& voltwing : voltwings)
+    {
+        voltwing->drawVoltwing(window);
+    }
+
+    for(auto& beamlok : beamloks)
+    {
+        beamlok->drawBeamlok(window);
+    }
+
+
+    if(currentMapIndex < 3)
+        window.draw(*tutorialText);
+
+
+    window.draw(*coinText);
+}
+
+// Η αρίθμηση του πίνακα 0,1,2,...
+std::array<Cell,4> mapManager::mapCollision(sf::FloatRect bounds)
+{
+
+    // 0 -> κενό
+    // 1 -> μπλε
+    // 2 -> κόκκινο
+    // 3 -> trigger
+    // 4 -> exit
+    std::array<Cell,4> total = {Cell::Empty,Cell::Empty,Cell::Empty,Cell::Empty};
+
+
+    // Θέλουμε να ελέγξουμε τα 4 τετράγωνα γύρω από τα όρια του παίκτη
+    sf::Vector2f cells[4] =
+    {
+        // top left cell
+        {floorf( bounds.position.x / static_cast<float>(cellSize)),                  floorf(bounds.position.y / static_cast<float>(cellSize))},
+        // top right cell
+        {floorf((bounds.position.x + bounds.size.x) / static_cast<float>(cellSize)), floorf(bounds.position.y / static_cast<float>(cellSize))},
+        // bottom left cell
+        {floorf( bounds.position.x / static_cast<float>(cellSize)),                  floorf((bounds.position.y + bounds.size.y) / static_cast<float>(cellSize))},
+        // bottom right cell
+        {floorf((bounds.position.x + bounds.size.x) / static_cast<float>(cellSize)), floorf((bounds.position.y + bounds.size.y) / static_cast<float>(cellSize))}
+    };
+
+
+    for (unsigned char a = 0; a < 4; ++a)
+    {
+        short tempX = cells[a].x;
+        short tempY = cells[a].y;
+
+        if (tempX >= 0 && tempX < currentMapWidth && tempY >= 0 && tempY < currentMapHeight)
+        {
+            if (mapPool[currentMapIndex][tempY][tempX] == Cell::BlueTile)
+            {
+                total[a] = Cell::BlueTile;
+            }
+            else if (mapPool[currentMapIndex][tempY][tempX] == Cell::RedTile)
+            {
+                total[a] = Cell::RedTile;
+            }
+            else if (mapPool[currentMapIndex][tempY][tempX] == Cell::TriggerTile)
+            {
+                sound->playTrigger();
+                total[a] = Cell::TriggerTile;
+                updateMapComponets(this,tempX,tempY);
+            }
+            else if (mapPool[currentMapIndex][tempY][tempX] == Cell::ExitTile)
+            {
+                total[a] = Cell::ExitTile;
+            }
+        }
+    }
+
+    return total;
+}
+
+
+void mapManager::nextMap()
+{
+    platforms.clear();
+    coins.clear();
+    voltwings.clear();
+    beamloks.clear();
+    currentMapIndex++;
+    currentMapHeight = mapPool[currentMapIndex].size();
+    currentMapWidth = mapPool[currentMapIndex][0].size();
+
+    mapPixelWidth = currentMapWidth * cellSize;
+    mapPixelHeight = currentMapHeight * cellSize;
+
+    addMapComponents(this);
+ 
+}
+
+void mapManager::updateCamera(sf::RenderWindow& window,sf::View& view,float x,float y)
+{
+
+        centerX = x + 16.0f;
+        centerY = y + 16.0f;
+
+        centerX = std::clamp(centerX, viewSize.x/2.f, mapPixelWidth - viewSize.x/2.f);
+        centerY = std::clamp(centerY, viewSize.y/2.f, mapPixelHeight - viewSize.y/2.f);
+
+        view.setCenter({centerX, centerY});
+        window.setView(view);
+
+        // Background update
+        backgroundSprite->setPosition({view.getCenter().x - 512.f -32.f,view.getCenter().y - 464.f});
+
+}
+
+void mapManager::updatePlatforms(Bitron& bitron)
+{
+    for(auto& plat : platforms)
+    {
+        plat->platformUpdate(bitron);
+    }
+
+}
+
+void mapManager::updateCoins(Bitron& bitron,Health& health)
+{
+
+for (auto it = coins.begin(); it != coins.end(); )
+{
+
+    if ((*it)->coinUpdate(bitron))
+    {
+        sound->playCoin();
+        it = coins.erase(it);
+        coinCounter++;
+        if(coinCounter == 50)
+        {
+            coinCounter = 0;
+            health.addHealth();
+            sound->playLife();
+        }
+        coinText->setString("COINS:"+std::to_string(coinCounter));
+    }
+    else
+    {
+        ++it;
+    }
+
+}
+
+}
+
+void mapManager::updateVoltwings(Bitron& bitron,Health& health)
+{
+    for(auto& voltwing : voltwings)
+    {
+        
+        if((*voltwing).updateVoltwing(bitron))
+        {
+                health.damageTaken();
+                bitron.bitronIsDamaged();
+                sound->playZap();
+        }
+    }
+}
+
+void mapManager::updateCoinsText(sf::View& view)
+{
+    coinText->setPosition({centerX - view.getSize().x/2.f + 4.f,centerY - view.getSize().y/2.f + 32.f});
+}
+
+void mapManager::updateBeamloks(Bitron& bitron,Health& health)
+{
+    for(auto& beamlok : beamloks)
+    {
+        beamlok->updateBeamlok(bitron,this,health);
+    }
+}
+
+
+bool mapManager::checkForTiles(short startX,short endX,short y)
+{
+    for( short i = startX ; i < endX ; ++i )
+    {
+        if(mapPool[currentMapIndex][y][i] == Cell::BlueTile) return true;
+    }
+
+    return false;
+}
+
+bool mapManager::projectileCollicion(short x,short y)
+{
+    short tempX = x;
+    if (x >= currentMapWidth) return false;
+    else if(x <= -1) tempX=0;
+    return mapPool[currentMapIndex][y][tempX] == Cell::Empty;
+}
