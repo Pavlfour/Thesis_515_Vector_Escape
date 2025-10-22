@@ -9,12 +9,12 @@ class circularPlatform : public platform
         float speed;
         float angle;
         float radius;
-        bool clockwise;
+        bool antiClockwise;
         sf::Vector2f center;
         sf::Vector2f lastPos;
 
     public:
-        circularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool clockwise = true,float startAngle = 0.0f);
+        circularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool antiClockwise = true,float startAngle = 0.0f);
         void platformUpdate(Bitron& bitron) override;
 
 };

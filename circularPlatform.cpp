@@ -1,10 +1,10 @@
 #include "headers/circularPlatform.hpp"
 
-circularPlatform::circularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool clockwise,float startAngle)
+circularPlatform::circularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool antiClockwise,float startAngle)
 :center(circleCenter),
 radius(radius),
 speed(speed),
-clockwise(clockwise),
+antiClockwise(antiClockwise),
 angle(startAngle),
 platform()
 {
@@ -16,7 +16,7 @@ void circularPlatform::platformUpdate(Bitron& bitron)
 {
     lastPos = platformPos;
     // Update angle based on direction
-    if (clockwise)
+    if (antiClockwise)
         angle -= speed;
     else
         angle += speed;
