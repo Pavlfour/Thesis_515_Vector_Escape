@@ -90,6 +90,9 @@ bool Game::isRunning()
     }
 
     m_elapsed += m_clock.restart().asSeconds();
+    // Prevent "spiral of death"
+    if(m_elapsed > 0.25)
+        m_elapsed = 0.25;
 
     return true;
 
