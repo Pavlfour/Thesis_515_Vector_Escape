@@ -79,6 +79,7 @@ bool Game::isRunning()
 void Game::update()
 {
 
+
     if(isTerminated)
     {
         return;
@@ -139,6 +140,10 @@ void Game::draw()
         map.drawMap(window);
         health.drawHealth(window);
         bitron.drawBitron(window);
+        if(isTerminated)
+        {
+            window.draw(*titleText);
+        }
     }
     else
     {
