@@ -5,10 +5,7 @@ sound(std::make_shared<Sounds>()),
 bitron(sound),
 map(sound),
 mainMenu(true),
-count(0),
-currentFPS(0.),
 m_elapsed(0.f),
-checkOnce(false),
 isTerminated(false)
 {
     m_clock.restart();
@@ -61,35 +58,16 @@ bool Game::isRunning()
         }
     }
 
-    checkOnce = false;
     while (m_elapsed >= timestep)
     {
-
-        if(!checkOnce)
-        {
-            checkOnce = true;
-            count++;
-            currentFPS = 1.f/m_elapsed;
-        }
-
         update();
         m_elapsed -= timestep;
     }
 
     draw();
     
-    //FPS Display
-    if(!mainMenu && !isTerminated)
-    {
-        // Θέλουμε τα χαμηλά fps να φαίνονται διαφορετικά ότι δείξει η δειγματοληξία
-        if(currentFPS <= 50.f || count>=20)
-        {
-            titleText->setString("FPS: "+std::to_string( static_cast<int>(currentFPS)));
-            count = 0;
-        }
-    }
-
     m_elapsed += m_clock.restart().asSeconds();
+
     // Prevent "spiral of death"
     if(m_elapsed > 0.25)
         m_elapsed = 0.25;
@@ -130,10 +108,6 @@ void Game::update()
         {
             mainMenu = false;
             sound->playBackgroundMusic();
-            titleText->setFillColor(sf::Color({100, 255, 100}));
-            titleText->setOutlineThickness(0.f);
-            titleText->setScale({0.5f,0.5f});
-            titleText->setString("FPS:  0");
         }
 
         return;
@@ -143,7 +117,6 @@ void Game::update()
     bitron.updateBitron(map,health);
     map.updateCamera(window,view,bitron.getX(),bitron.getY());
 
-    titleText->setPosition({view.getCenter().x + 400.f,view.getCenter().y - 250.f});
 
     // Update the rest componets
     map.updatePlatforms(bitron);
@@ -166,7 +139,6 @@ void Game::draw()
         map.drawMap(window);
         health.drawHealth(window);
         bitron.drawBitron(window);
-        window.draw(*titleText);
     }
     else
     {
