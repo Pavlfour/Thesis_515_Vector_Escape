@@ -6,7 +6,8 @@ bitron(sound),
 map(sound),
 mainMenu(true),
 m_elapsed(0.f),
-isTerminated(false)
+isTerminated(false),
+isFinished(false)
 {
     m_clock.restart();
     srand(time(nullptr));
@@ -99,6 +100,17 @@ void Game::update()
         sound->playGameOver();
         return;
     }
+    else if(map.getCurrentMapIndex() == 9 && !isFinished)
+    {
+        isFinished = true;
+        titleText->setFillColor(sf::Color::Yellow);
+        titleText->setOutlineThickness(0.f);
+        titleText->setScale({2.5f,2.5f});
+        titleText->setString("WINNER!");
+        titleText->setPosition({view.getCenter().x - 240.f,view.getCenter().y - 128.f});
+        sound->stopBackgroundMusic();
+        sound->playWin();
+    }
     
 
     // Main Menu
@@ -140,10 +152,11 @@ void Game::draw()
         map.drawMap(window);
         health.drawHealth(window);
         bitron.drawBitron(window);
-        if(isTerminated)
+        if(isTerminated || isFinished)
         {
             window.draw(*titleText);
         }
+
     }
     else
     {

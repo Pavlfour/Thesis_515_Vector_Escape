@@ -134,28 +134,42 @@ namespace maps
         {3,1,2,2,2,2,1,1,2,1,2,2,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,1,1,2,1,2,2,2,1,2,1,1,2,0,0,0,0,0,0},
         {2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,2,1,1,2,1,2,2,1,2,1,1,1,2,2,2,0,0,0,0,0,0},
         {2,1,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,2,2,1,2,2,1,2,3,2,1,2,1,1,1,0,0,0,0,0,0},
-        {2,2,2,0,0,0,0,0,0,0,0,0,0,2,2,1,1,2,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,2,2,1,2,2,2,1,0,0,0,0,0,0},
-        {2,2,1,1,1,1,1,1,1,1,1,1,0,2,2,2,2,2,3,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,1,2,1,2,2,1,1,0,0,0,0,0,0},
-        {2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,1,2,2,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,2,1,1,3,1,1,1,0,0,0,0,0,0},
-        {2,1,0,0,0,0,0,0,0,0,0,0,0,2,2,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,2,2,2,2,2,1,1,0,0,0,0,0,0},
-        {2,2,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
-        {1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,3,0,0,0,0,0,0,0,1,2,2,2,1,2,1,0,1,1,2,1,2,2,2,1,0,0,0,0,0,0},
-        {2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,2,1,2,2,1,1,0,1,3,2,1,3,1,1,1,0,0,0,0,0,0},
-        {2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,1,1,2,2,1,1,1,1,0,1,2,2,2,2,1,2,2,0,0,0,0,0,0},
-        {3,2,0,0,0,0,0,0,0,2,2,2,1,1,2,1,1,1,1,2,2,2,2,2,2,2,2,1,2,2,2,1,0,1,2,2,1,1,2,3,2,0,0,0,0,0,0},
-        {2,2,0,0,0,0,0,0,0,0,2,2,2,1,2,2,2,2,2,1,2,1,2,1,2,1,2,1,1,2,2,1,0,1,2,2,2,2,2,2,2,0,0,0,0,0,0},
-        {2,2,0,0,0,0,0,0,0,0,0,2,1,2,2,1,1,3,2,2,1,1,1,3,2,2,1,1,2,2,2,1,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-        {2,1,0,0,0,0,0,0,0,0,0,1,2,1,2,2,2,1,2,1,2,2,1,2,2,2,2,2,1,1,3,1,0,2,2,2,1,2,2,2,2,2,2,2,2,2,2},
-        {1,2,0,0,0,0,0,0,0,0,0,1,2,1,1,1,1,2,1,1,2,1,2,1,1,1,2,3,2,2,1,1,0,2,1,2,2,2,1,2,2,2,2,2,2,2,1},
-        {1,2,0,0,0,0,0,0,0,0,0,2,1,2,2,2,1,2,2,0,0,0,0,2,2,1,1,2,1,1,1,1,0,2,1,2,2,2,2,2,2,1,1,2,2,2,2},
-        {2,0,0,0,0,0,0,0,0,0,2,2,1,1,2,2,2,1,1,0,0,0,0,1,1,1,2,1,1,2,1,2,0,2,2,2,2,1,2,2,2,2,1,1,2,2,2},
-        {2,0,0,0,0,0,0,0,0,0,2,2,2,2,1,1,2,1,1,0,0,0,0,2,2,3,1,1,2,1,1,2,3,0,0,0,0,0,0,0,0,0,0,0,0,4,1},
+        {2,2,2,0,0,0,0,0,0,0,0,0,0,2,2,1,1,2,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,2,2,1,2,2,2,1,2,2,2,2,2,2},
+        {2,2,1,1,1,1,1,1,1,1,1,1,0,2,2,2,2,2,3,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,1,2,1,2,2,1,1,2,2,2,2,2,2},
+        {2,2,0,0,0,0,0,0,0,0,0,0,0,2,2,1,2,2,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,2,1,1,3,1,1,1,2,2,2,2,2,2},
+        {2,1,0,0,0,0,0,0,0,0,0,0,0,2,2,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,2,2,2,2,2,1,1,2,2,2,2,2,2},
+        {2,2,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2},
+        {1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,3,0,0,0,0,0,0,0,1,2,2,2,1,2,1,0,1,1,2,1,2,2,2,1,2,2,2,2,2,2},
+        {2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,2,1,2,2,1,1,0,1,3,2,1,3,1,1,1,2,2,2,2,2,2},
+        {2,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,1,1,2,2,1,1,1,1,0,1,2,2,2,2,1,2,2,2,2,2,2,2,2},
+        {3,2,0,0,0,0,0,0,0,2,2,2,1,1,2,1,1,1,1,2,2,2,2,2,2,2,2,1,2,2,2,1,0,1,2,2,1,1,2,2,2,2,2,2,2,2,2},
+        {2,2,0,0,0,0,0,0,0,0,2,2,2,1,2,2,2,2,2,1,2,1,2,1,2,1,2,1,1,2,2,1,0,1,2,2,2,2,4,2,2,2,2,2,2,2,2},
+        {2,2,0,0,0,0,0,0,0,0,0,2,1,2,2,1,1,3,2,2,1,1,1,3,2,2,1,1,2,2,2,1,0,2,2,2,2,2,0,0,2,2,2,2,2,2,2},
+        {2,1,0,0,0,0,0,0,0,0,0,1,2,1,2,2,2,1,2,1,2,2,1,2,2,2,2,2,1,1,3,1,0,2,2,2,1,2,1,0,0,2,0,2,2,2,2},
+        {1,2,0,0,0,0,0,0,0,0,0,1,2,1,1,1,1,2,1,1,2,1,2,1,1,1,2,3,2,2,1,1,0,2,1,2,2,2,1,1,0,0,0,0,0,2,1},
+        {1,2,0,0,0,0,0,0,0,0,0,2,1,2,2,2,1,2,2,0,0,0,0,2,2,1,1,2,1,1,1,1,0,2,1,2,2,2,2,2,0,1,1,1,0,0,2},
+        {2,0,0,0,0,0,0,0,0,0,2,2,1,1,2,2,2,1,1,0,0,0,0,1,1,1,2,1,1,2,1,2,0,2,2,2,2,1,2,2,2,2,1,1,1,0,2},
+        {2,0,0,0,0,0,0,0,0,0,2,2,2,2,1,1,2,1,1,0,0,0,0,2,2,3,1,1,2,1,1,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {0,0,0,0,0,0,0,0,0,2,2,2,1,2,1,2,1,2,2,0,0,0,0,1,2,1,2,1,2,2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
         {0,0,0,0,0,0,0,0,2,2,1,2,2,1,1,1,1,2,1,0,0,0,0,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
         {0,0,0,0,0,0,0,0,2,2,3,2,1,1,2,1,2,1,2,0,0,0,0,1,1,1,2,2,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
         {0,0,0,0,0,0,0,2,2,1,2,2,1,2,2,1,2,1,1,0,0,0,0,2,1,2,2,2,2,2,2,2,1,2,2,1,1,1,1,2,1,1,1,2,2,1,2},
         {0,0,0,0,0,0,2,2,2,2,1,2,1,1,1,1,2,1,2,0,0,0,0,1,1,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,3,2,2},
         {1,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+    };
+
+
+    // credits map
+    std::vector<std::vector<unsigned short>> map10 =
+    {
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
 
 }
@@ -424,6 +438,17 @@ void addMapComponents(mapManager* currentMap)
             currentMap->addLinearPlatform({12*cellSize,7*cellSize},{4*cellSize,7*cellSize},0.8f);
             currentMap->addLinearPlatform({4*cellSize,10*cellSize},{15*cellSize,10*cellSize},1.9f);
 
+            // Voltwings
+            currentMap->addVoltwing({{3*cellSize+16.f,22*cellSize+16.f},{3*cellSize + 16.f,22*cellSize + 16.f}}
+                                    ,0.2f);
+            currentMap->addVoltwing({{6*cellSize+16.f,16*cellSize+16.f},{6*cellSize + 16.f,16*cellSize + 16.f}}
+                                    ,0.2f);
+
+
+            currentMap->addVoltwing({{42*cellSize+16.f,15*cellSize+16.f},{42*cellSize + 16.f,16*cellSize + 16.f}}
+                                    ,1.5f);
+            currentMap->addVoltwing({{40*cellSize+16.f,17*cellSize+16.f},{40*cellSize + 16.f,15*cellSize + 16.f}}
+                                    ,0.75f);
             break;
     }
             
@@ -506,60 +531,11 @@ void updateMapComponets(mapManager* currentMap,short x,short y)
                 // αριστερά πάνω
                 if(x == 8 && y == 1)
                 {
-                    progress = 0;
-                    // εμφάνισε
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][14] = Cell::TriggerTile;
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::TriggerTile;
 
-                    //reset
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
-                }
-                // δεξιά πάνω
-                else if(x == 14 && y == 1)
-                {
-                    progress = 1;
-                    // κρύψε
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::Empty;
-                    // εμφάνισε
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][8] = Cell::TriggerTile;
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][8] = Cell::TriggerTile;
-                    // advance
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::Empty;
-                    //reset
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
-                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
-                }
-                // δεξιά κάτω
-                else if(x == 14 && y == 3)
-                {
-                    if(progress != 2)
+                    if(progress == 3)
                     {
-                        // εμφάνισε
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][8] = Cell::TriggerTile;
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][8] = Cell::TriggerTile;
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][14] = Cell::TriggerTile;
-
-                        if(progress == 0)
-                        {
-                            // advance
-                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::Empty;
-                        }
-                        else
-                        {
-                            //reset
-                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
-                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
-                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
-                            progress = 0;
-                        }
-                        
 
 
-                    }
-                    else
-                    {
                         // κρύψε
                         currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][8] = Cell::Empty;
                         currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][8] = Cell::Empty;
@@ -610,36 +586,128 @@ void updateMapComponets(mapManager* currentMap,short x,short y)
                             currentMap->addCoin(i*cellSize + 41, 6*cellSize +40);
                         }
                         return;
+
                     }
+                    else
+                    {
+
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][14] = Cell::TriggerTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::TriggerTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][8] = Cell::TriggerTile;
+
+                        if(progress == 0)
+                        {
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::Empty;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
+                        }
+                        else if(progress == 1)
+                        {
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::Empty;
+                            progress = 0;
+                        }
+                        else if(progress == 2)
+                        {
+                            progress = 0;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::Empty;
+                            currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
+                        }
+                    }
+
+
+                }
+                // δεξιά πάνω
+                else if(x == 14 && y == 1)
+                {
+
+                    // εμφάνισε
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][8] = Cell::TriggerTile;
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][8] = Cell::TriggerTile;
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::TriggerTile;
+
+                    if(progress == 0)
+                    {
+
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
+                    }
+                    else
+                    {
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::Empty;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
+                    }
+
+                    progress = 1;
+
+                }
+                // δεξιά κάτω
+                else if(x == 14 && y == 3)
+                {
+
+                    // εμφάνισε
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][8] = Cell::TriggerTile;
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][8] = Cell::TriggerTile;
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][14] = Cell::TriggerTile;
+
+                    if(progress == 0)
+                    {
+
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::Empty;
+                    }
+                    else if(progress == 1)
+                    {
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::Empty;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
+                        progress = 0;
+                    }
+                    else if(progress == 2)
+                    {
+                        progress = 3;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::Empty;
+                    }
+
+
+
+
+
 
                 }
                 // αριστερά κάτω
                 else if(x == 8 && y == 3)
                 {
+
                     // εμφάνισε
                     currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][8] = Cell::TriggerTile;
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][14] = Cell::TriggerTile;
+                    currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::TriggerTile;
+
                     if(progress == 0)
                     {
-                        // advance
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::Empty;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::Empty;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::Empty;
                     }
-                    if(progress == 1)
+                    else if(progress == 1)
                     {
                         progress = 2;
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::TriggerTile;
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][1][14] = Cell::TriggerTile;
-                        // advance
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::Empty;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::Empty;
                     }
                     else
                     {
-                        // κρύψε με συνθήκη
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][3][14] = Cell::Empty;
-                        //reset
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::BlueTile;
-                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::BlueTile;
-                        progress = 0;
-                        
+                        progress = 1;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][4][11] = Cell::Empty;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][5][11] = Cell::BlueTile;
+                        currentMap->getMapPool()[currentMap->getCurrentMapIndex()][6][11] = Cell::Empty;
                     }
 
 
@@ -667,7 +735,7 @@ void updateMapComponets(mapManager* currentMap,short x,short y)
                 }
                 else if(x == 32 && y == 19)
                 {
-                    currentMap->addLinearPlatform({32*cellSize,20*cellSize},{44*cellSize,20*cellSize},0.7f);
+                    currentMap->addLinearPlatform({32*cellSize,20*cellSize},{45*cellSize,20*cellSize},0.7f);
                 }
             break;
             }

@@ -47,7 +47,7 @@ class Game
         float m_elapsed;
 
         // TEST
-        bool isTerminated;
+        bool isTerminated,isFinished;
 
 
 };

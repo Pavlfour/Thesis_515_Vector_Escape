@@ -81,7 +81,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
 {
 
     // skipping maps (Cheating!!)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) && advanceMap && map.getCurrentMapIndex() < 8)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) && advanceMap && map.getCurrentMapIndex() < 9)
     {
         advanceMap = false;
         resetPosition = false;
@@ -128,8 +128,8 @@ void Bitron::updateBitron(mapManager& map,Health& health)
                 y = 1468.f;
                 break;
             default:
-                x = 16.f;
-                y = 256.f;
+                x = 80.f;
+                y = 384.f;
 
         }
 

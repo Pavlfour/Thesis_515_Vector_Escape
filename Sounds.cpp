@@ -7,7 +7,7 @@ Sounds::Sounds()
     if(!jumpBuffer.loadFromFile("assets/sound/jump.wav") || !triggerBuffer.loadFromFile("assets/sound/trigger.wav") || !dieBuffer.loadFromFile("assets/sound/die.wav")
     || !nextBuffer.loadFromFile("assets/sound/next.wav") || !coinBuffer.loadFromFile("assets/sound/coin.wav")       || !zapBuffer.loadFromFile("assets/sound/zap.wav")
     || !lifeBuffer.loadFromFile("assets/sound/life.wav") || !shootBuffer.loadFromFile("assets/sound/shoot.wav")     || !backgroundMusic.openFromFile("assets/sound/music.wav")
-    || !gameOverBuffer.loadFromFile("assets/sound/gameover.wav"))
+    || !gameOverBuffer.loadFromFile("assets/sound/gameover.wav") || !winBuffer.loadFromFile("assets/sound/win.wav"))
     {
         throw std::runtime_error("Failed to load sounds");
     }
@@ -22,6 +22,7 @@ Sounds::Sounds()
     lifeSound = new sf::Sound(lifeBuffer);
     shootSound = new sf::Sound(shootBuffer);
     gameOverSound = new sf::Sound(gameOverBuffer);
+    winSound = new sf::Sound(winBuffer);
 
     backgroundMusic.setLooping(true);
     backgroundMusic.setVolume(40);
@@ -38,6 +39,7 @@ Sounds::~Sounds()
     delete zapSound;
     delete shootSound;
     delete gameOverSound;
+    delete winSound;
 }
 
 void Sounds::playBackgroundMusic()
@@ -64,4 +66,5 @@ void Sounds::playCoin()      { coinSound->play();    }
 void Sounds::playZap()       { zapSound->play();     }
 void Sounds::playLife()      { lifeSound->play();    }
 void Sounds::playShoot()     { shootSound->play();   }
-void Sounds::playGameOver()  { gameOverSound->play();   }
+void Sounds::playGameOver()  { gameOverSound->play();}
+void Sounds::playWin()       { winSound->play();     }

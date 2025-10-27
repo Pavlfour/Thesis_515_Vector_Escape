@@ -55,6 +55,7 @@ sound(sound)
     convertMap(maps::map7);
     convertMap(maps::map8);
     convertMap(maps::map9);
+    convertMap(maps::map10);
 
     // Μόνο για την πρώτη πίστα
     currentMapHeight = mapPool[currentMapIndex].size();
