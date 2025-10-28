@@ -1,14 +1,10 @@
 #pragma once
-#include <chrono>
 #include "mapManager.hpp"
 #include "Bitron.hpp"
 #include "Sounds.hpp"
 #include "Globals.hpp"
 #include "Health.hpp"
-#include <chrono>
 
-// ~60 FPS
-constexpr std::chrono::microseconds FRAME_DURATION(16667);
 
 class Game
 {
