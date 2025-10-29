@@ -6,7 +6,6 @@
 #include "Health.hpp"
 #include "windowText.hpp"
 
-
 class Game
 {
     public:
@@ -20,7 +19,7 @@ class Game
         sf::RenderWindow window;
         sf::Image icon;
         sf::View view;
-        windowText text;
+        std::shared_ptr<windowText> text;
         std::shared_ptr<Sounds> sound;
         Bitron bitron;
         mapManager map;

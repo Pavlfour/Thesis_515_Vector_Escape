@@ -2,8 +2,9 @@
 
 Game::Game():
 sound(std::make_shared<Sounds>()),
+text(std::make_shared<windowText>()),
 bitron(sound),
-map(sound),
+map(sound,text),
 mainMenu(true),
 isTerminated(false),
 isFinished(false),
@@ -31,7 +32,6 @@ m_elapsed(0.f)
     }
     mainMenuSprite = std::make_unique<sf::Sprite>(mainMenuTexture);
 
-    text.setMainMenuText();
 
 }
 
@@ -81,6 +81,7 @@ void Game::update()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space))
         {
             mainMenu = false;
+            text->setFirstMapText();
             sound->playBackgroundMusic();
         }
 
@@ -89,7 +90,7 @@ void Game::update()
     // Game Over
     else if(health.gameOver())
     {
-        text.setGameOverText(view.getCenter().x - 319.f,view.getCenter().y - 128.f);
+        text->setGameOverText(view.getCenter().x - 205.f,view.getCenter().y - 128.f);
         sound->stopBackgroundMusic();
         isTerminated = true;
         sound->playGameOver();
@@ -98,7 +99,7 @@ void Game::update()
     // Winner
     else if(map.getCurrentMapIndex() == 9 && !isFinished)
     {
-        text.setWinnerText(view.getCenter().x - 240.f,view.getCenter().y - 128.f);
+        text->setWinnerText(view.getCenter().x - 130.f,view.getCenter().y - 128.f);
         sound->stopBackgroundMusic();
         isFinished = true;
         sound->playWin();
@@ -134,14 +135,14 @@ void Game::draw()
         bitron.drawBitron(window);
         if(isTerminated || isFinished)
         {
-            window.draw(text.getText());
+            window.draw(text->getStateText());
         }
 
     }
     else
     {
         window.draw(*mainMenuSprite);
-        window.draw(text.getText());
+        window.draw(text->getStateText());
     }
 
     window.display();

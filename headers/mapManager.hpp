@@ -17,9 +17,10 @@
 #include "Health.hpp"
 #include "Beamlok.hpp"
 #include "laser.hpp"
+#include "windowText.hpp"
 #define cellSize 64
 
-
+class windowText;
 class platform;
 class circularPlatform;
 class Bitron;
@@ -50,23 +51,19 @@ class mapManager
         sf::Texture triggerTileTexture;
         std::unique_ptr<sf::Sprite> fillingSprite;
 
-        std::unique_ptr<sf::Font> font;
-        std::unique_ptr<sf::Text> coinText;
 
         sf::Texture backgroundTexture;
         std::unique_ptr<sf::Sprite> backgroundSprite;
 
 
         unsigned short coinCounter;
-
         std::shared_ptr<Sounds> sound;
 
     public:
 
-        mapManager(std::shared_ptr<Sounds> sound);
+        mapManager(std::shared_ptr<Sounds> sound,std::shared_ptr<windowText> text);
 
-        // Tutorial text
-        std::unique_ptr<sf::Text> tutorialText;
+        std::shared_ptr<windowText> text;
 
         // utils
         void convertMap(std::vector<std::vector<unsigned short>> map);

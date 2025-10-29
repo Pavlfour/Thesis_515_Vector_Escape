@@ -1,8 +1,9 @@
 #include "headers/mapManager.hpp"
 #include "mapDetailsHandler.cpp"
 
-mapManager::mapManager(std::shared_ptr<Sounds> sound):
-sound(sound)
+mapManager::mapManager(std::shared_ptr<Sounds> sound,std::shared_ptr<windowText> text):
+sound(sound),
+text(text)
 {
     currentMapIndex = 0;
     coinCounter = 0;
@@ -15,35 +16,12 @@ sound(sound)
         throw std::runtime_error("Failed to load textures");
     }
 
-
     // Background Image
     backgroundSprite = std::make_unique<sf::Sprite>(backgroundTexture);
-
-
     // dummy
     fillingSprite = std::make_unique<sf::Sprite>(blueTileTexture);
 
-    // Money!!
-    // Open a new font
-    font = std::make_unique<sf::Font>("assets/fonts/NES.ttf");
-    coinText = std::make_unique<sf::Text>(*font);
 
-    // Tutorial text
-    tutorialText = std::make_unique<sf::Text>(*font);
-    tutorialText->setFillColor(sf::Color::Black);
-    tutorialText->setOutlineThickness(2.f);
-    tutorialText->setOutlineColor(sf::Color::White);
-    tutorialText->setCharacterSize(18);
-    tutorialText->setLineSpacing(1.5f);
-    tutorialText->setString("USE THE ARROW KEYS TO NAVIGATE\nHOLD THE UP KEY FOR LONGER JUMPS!\nAVOID RED TILES TO PREVENT LOSING HEALTH!!");
-    tutorialText->setPosition({150.f,150.f});
-
-
-    coinText->setFillColor(sf::Color{72,114,225});
-    coinText->setOutlineThickness(1.5f);
-    coinText->setOutlineColor(sf::Color::Black);
-    coinText->setCharacterSize(16);
-    coinText->setString("COINS:"+std::to_string(coinCounter));
 
     // Αρχικοποίηση των πιστών στην λίστα
     convertMap(maps::map1);
@@ -62,7 +40,6 @@ sound(sound)
     currentMapWidth = mapPool[currentMapIndex][0].size();
     mapPixelWidth = currentMapWidth * cellSize;
     mapPixelHeight = currentMapHeight * cellSize;
-
 
 }
 
@@ -183,10 +160,10 @@ void mapManager::drawMap(sf::RenderWindow& window)
 
 
     if(currentMapIndex < 3)
-        window.draw(*tutorialText);
+        window.draw(text->getStateText());
 
 
-    window.draw(*coinText);
+    window.draw(text->getCoinText());
 }
 
 // Η αρίθμηση του πίνακα 0,1,2,...
@@ -307,7 +284,7 @@ for (auto it = coins.begin(); it != coins.end(); )
             health.addHealth();
             sound->playLife();
         }
-        coinText->setString("COINS:"+std::to_string(coinCounter));
+        text->updateCoinCounter(coinCounter);
     }
     else
     {
@@ -334,7 +311,7 @@ void mapManager::updateVoltwings(Bitron& bitron,Health& health)
 
 void mapManager::updateCoinsText(sf::View& view)
 {
-    coinText->setPosition({centerX - view.getSize().x/2.f + 4.f,centerY - view.getSize().y/2.f + 32.f});
+    text->updateCoinPosition(centerX - view.getSize().x/2.f + 4.f,centerY - view.getSize().y/2.f + 32.f);
 }
 
 void mapManager::updateBeamloks(Bitron& bitron,Health& health)

@@ -182,8 +182,7 @@ void addMapComponents(mapManager* currentMap)
     {
         case 1:
 
-            currentMap->tutorialText->setPosition({200.f,100.f});
-            currentMap->tutorialText->setString("ALWAYS AVOID ENEMIES!\nCOLLECT COINS FOR EXTRA LIFE\nACTIVATE TRIGGER TILES TO UPDATE THE MAP");
+            currentMap->text->setSecondMapText();
             // Voltwings
             currentMap->addVoltwing({{2*cellSize+16.f,6*cellSize+16.f},{4*cellSize + 16.f,6*cellSize+16.f}},0.5f);
             // Coins
@@ -198,8 +197,7 @@ void addMapComponents(mapManager* currentMap)
 
         case 2:
 
-            currentMap->tutorialText->setPosition({120.f,60.f});
-            currentMap->tutorialText->setString("ENJOY AND GOOD LUCK!");
+            currentMap->text->setThirdMapText();
             // Coins
             currentMap->addCoin(5*cellSize - 41, 2*cellSize - 41);
             currentMap->addCoin(8*cellSize - 41, 2*cellSize - 41);
