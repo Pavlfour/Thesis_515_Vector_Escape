@@ -5,9 +5,9 @@ sound(std::make_shared<Sounds>()),
 bitron(sound),
 map(sound),
 mainMenu(true),
-m_elapsed(0.f),
 isTerminated(false),
-isFinished(false)
+isFinished(false),
+m_elapsed(0.f)
 {
     m_clock.restart();
     srand(time(nullptr));
@@ -24,25 +24,14 @@ isFinished(false)
     }
     window.setIcon({icon.getSize().x, icon.getSize().y}, icon.getPixelsPtr());
 
-    // Main Menu
+    // Main menu background
     if(!mainMenuTexture.loadFromFile("assets/sprites/menu.png"))
     {
         throw std::runtime_error("Failed to load menu.png");
     }
     mainMenuSprite = std::make_unique<sf::Sprite>(mainMenuTexture);
 
-    // Main Menu title
-    font = std::make_unique<sf::Font>("assets/fonts/NES.ttf");
-    titleText = std::make_unique<sf::Text>(*font);
-    titleText->setFillColor(sf::Color({45,105,220}));
-    titleText->setOutlineThickness(2.5f);
-    titleText->setOutlineColor(sf::Color({160,190,240}));
-    titleText->setCharacterSize(28);
-    titleText->setScale({3.f,3.2f});
-    titleText->setLineSpacing(1.5f);
-    titleText->setString("VECTOR ESCAPE");
-    titleText->setPosition({90.f,50.f});
-
+    text.setMainMenuText();
 
 }
 
@@ -80,41 +69,13 @@ bool Game::isRunning()
 void Game::update()
 {
 
-
+    // Loser
     if(isTerminated)
     {
         return;
     }
-
-    // Game Over
-    if(health.gameOver())
-    {
-        // Will fix it later
-        titleText->setFillColor(sf::Color::Red);
-        titleText->setOutlineThickness(0.f);
-        titleText->setScale({2.5f,2.5f});
-        titleText->setString("GAME OVER");
-        titleText->setPosition({view.getCenter().x - 319.f,view.getCenter().y - 128.f});
-        sound->stopBackgroundMusic();
-        isTerminated = true;
-        sound->playGameOver();
-        return;
-    }
-    else if(map.getCurrentMapIndex() == 9 && !isFinished)
-    {
-        isFinished = true;
-        titleText->setFillColor(sf::Color::Yellow);
-        titleText->setOutlineThickness(0.f);
-        titleText->setScale({2.5f,2.5f});
-        titleText->setString("WINNER!");
-        titleText->setPosition({view.getCenter().x - 240.f,view.getCenter().y - 128.f});
-        sound->stopBackgroundMusic();
-        sound->playWin();
-    }
-    
-
     // Main Menu
-    if(mainMenu)
+    else if(mainMenu)
     {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space))
@@ -125,12 +86,31 @@ void Game::update()
 
         return;
     }
+    // Game Over
+    else if(health.gameOver())
+    {
+        text.setGameOverText(view.getCenter().x - 319.f,view.getCenter().y - 128.f);
+        sound->stopBackgroundMusic();
+        isTerminated = true;
+        sound->playGameOver();
+        return;
+    }
+    // Winner
+    else if(map.getCurrentMapIndex() == 9 && !isFinished)
+    {
+        text.setWinnerText(view.getCenter().x - 240.f,view.getCenter().y - 128.f);
+        sound->stopBackgroundMusic();
+        isFinished = true;
+        sound->playWin();
+        return;
+    }
+    
+
+
 
     // Update first bitron for positioning the view correctly 
     bitron.updateBitron(map,health);
     map.updateCamera(window,view,bitron.getX(),bitron.getY());
-
-
     // Update the rest componets
     map.updatePlatforms(bitron);
     map.updateCoins(bitron,health);
@@ -154,14 +134,14 @@ void Game::draw()
         bitron.drawBitron(window);
         if(isTerminated || isFinished)
         {
-            window.draw(*titleText);
+            window.draw(text.getText());
         }
 
     }
     else
     {
         window.draw(*mainMenuSprite);
-        window.draw(*titleText);
+        window.draw(text.getText());
     }
 
     window.display();

@@ -4,6 +4,7 @@
 #include "Sounds.hpp"
 #include "Globals.hpp"
 #include "Health.hpp"
+#include "windowText.hpp"
 
 
 class Game
@@ -19,17 +20,17 @@ class Game
         sf::RenderWindow window;
         sf::Image icon;
         sf::View view;
+        windowText text;
         std::shared_ptr<Sounds> sound;
         Bitron bitron;
         mapManager map;
         Health health;
 
 
-        // Main Menu components
+        // Main Menu
         sf::Texture mainMenuTexture;
         std::unique_ptr<sf::Sprite> mainMenuSprite;
-        std::unique_ptr<sf::Text> titleText;
-        std::unique_ptr<sf::Font> font;
+
 
 
         // Basic Functions
@@ -42,7 +43,6 @@ class Game
         sf::Clock m_clock;
         float m_elapsed;
 
-        // TEST
         bool isTerminated,isFinished;
 
 
