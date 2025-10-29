@@ -23,11 +23,10 @@
                 "-I\"C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\SFML-3.0.0\\include\"",
                 "-I\"C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\Vector Escape\\headers\"",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "C:/Users/30697/OneDrive/Desktop/beta1.0/Vector Escape/VectorEscape.exe",
                 "-L\"C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\SFML-3.0.0\\lib\"",
                 "-lsfml-graphics",
                 "-lsfml-window",
-                "-lsfml-system",
                 "-lsfml-audio",
                 "-lsfml-system",
                 "-mwindows"

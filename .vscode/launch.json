@@ -5,7 +5,7 @@
             "name": "Debug C++",
             "type": "cppdbg",
             "request": "launch",
-            "program": "C:/Users/30697/OneDrive/Desktop/beta1.0/Vector Escape/main.exe",
+            "program": "C:/Users/30697/OneDrive/Desktop/beta1.0/Vector Escape/VectorEscape.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
