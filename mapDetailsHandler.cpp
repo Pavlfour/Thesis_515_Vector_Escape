@@ -359,7 +359,6 @@ void addMapComponents(mapManager* currentMap)
             currentMap->addCoin(9*cellSize + 23, 16*cellSize +23);
             currentMap->addCoin(8*cellSize + 23, 16*cellSize +23);
             currentMap->addCoin(7*cellSize + 23, 16*cellSize +23);
-            currentMap->addCoin(7*cellSize + 23, 16*cellSize +23);
             currentMap->addCoin(9*cellSize + 23, 6*cellSize +23);
             currentMap->addCoin(9*cellSize + 23, 7*cellSize +23);
             currentMap->addCoin(9*cellSize + 23, 8*cellSize +23);
@@ -387,9 +386,6 @@ void addMapComponents(mapManager* currentMap)
             currentMap->addCoin(11*cellSize + 180, 10*cellSize +23);
             currentMap->addCoin(11*cellSize + 198, 10*cellSize +23);
             currentMap->addCoin(11*cellSize + 216, 10*cellSize +23);
-
-            // New coin adding
-            currentMap->addCoin(10*cellSize + 23, 16*cellSize +23);
 
             // Voltwings
             currentMap->addVoltwing({{13*cellSize+16.f,12*cellSize + 16.f},{14*cellSize + 16.f,12*cellSize + 16.f},
