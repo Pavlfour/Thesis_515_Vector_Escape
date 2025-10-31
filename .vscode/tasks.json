@@ -20,6 +20,7 @@
                 "C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\Vector Escape\\linearPlatform.cpp",
                 "C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\Vector Escape\\circularPlatform.cpp",
                 "C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\Vector Escape\\Sounds.cpp",
+                "C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\Vector Escape\\appicon.res",
                 "-I\"C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\SFML-3.0.0\\include\"",
                 "-I\"C:\\Users\\30697\\OneDrive\\Desktop\\beta1.0\\Vector Escape\\headers\"",
                 "-DSFML_STATIC",
