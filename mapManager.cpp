@@ -9,17 +9,15 @@ text(text)
     coinCounter = 0;
 
     // Φορτώνουμε τις εικόνες
-    if(!blueTileTexture.loadFromFile("assets/sprites/blue.png") || !redTileTexture.loadFromFile("assets/sprites/red.png")
-    || !exitTileTexture.loadFromFile("assets/sprites/exit.png") || !triggerTileTexture.loadFromFile("assets/sprites/trigger.png")
-    || !backgroundTexture.loadFromFile("assets/sprites/background.png"))
+    if(!backgroundTexture.loadFromFile("assets/sprites/background.png") || !tilesetTexture.loadFromFile("assets/sprites/Tileset.png"))
     {
         throw std::runtime_error("Failed to load textures");
     }
 
     // Background Image
     backgroundSprite = std::make_unique<sf::Sprite>(backgroundTexture);
-    // dummy
-    fillingSprite = std::make_unique<sf::Sprite>(blueTileTexture);
+    // static components
+    tilesetSprite = std::make_unique<sf::Sprite>(tilesetTexture);
 
 
 
@@ -125,16 +123,16 @@ void mapManager::drawMap(sf::RenderWindow& window)
             if (mapPool[currentMapIndex][a][b] == Cell::Empty)
                 continue;
             else if(mapPool[currentMapIndex][a][b] == Cell::BlueTile)
-                fillingSprite->setTexture(blueTileTexture);
+                tilesetSprite->setTextureRect(sf::IntRect({0, 0}, {cellSize, cellSize}));
             else if(mapPool[currentMapIndex][a][b] == Cell::TriggerTile)
-                fillingSprite->setTexture(triggerTileTexture);
+                tilesetSprite->setTextureRect(sf::IntRect({0, cellSize}, {cellSize, cellSize}));
             else if(mapPool[currentMapIndex][a][b] == Cell::ExitTile)
-                fillingSprite->setTexture(exitTileTexture);
+                tilesetSprite->setTextureRect(sf::IntRect({cellSize, cellSize}, {cellSize, cellSize}));
             else
-                fillingSprite->setTexture(redTileTexture);
+                tilesetSprite->setTextureRect(sf::IntRect({cellSize, 0}, {cellSize, cellSize}));
 
-            fillingSprite->setPosition({static_cast<float>(b * cellSize), static_cast<float>(a * cellSize)});
-            window.draw(*fillingSprite);
+            tilesetSprite->setPosition({static_cast<float>(b * cellSize), static_cast<float>(a * cellSize)});
+            window.draw(*tilesetSprite);
         }
     }
 

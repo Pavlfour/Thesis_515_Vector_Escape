@@ -34,7 +34,7 @@ class laser;
 class mapManager
 {
     private:
-        unsigned short currentMapIndex,currentMapHeight,currentMapWidth;
+        unsigned short currentMapIndex,currentMapHeight,currentMapWidth,coinCounter;
 
         float mapPixelWidth,mapPixelHeight,centerX,centerY;
 
@@ -42,22 +42,14 @@ class mapManager
         std::vector<std::unique_ptr<platform>> platforms;
         std::vector<std::unique_ptr<coin>> coins;
         std::vector<std::unique_ptr<Voltwing>> voltwings;
-        
         std::vector<std::unique_ptr<laser>> lasers;
-
-        sf::Texture blueTileTexture;
-        sf::Texture redTileTexture;
-        sf::Texture exitTileTexture;
-        sf::Texture triggerTileTexture;
-        std::unique_ptr<sf::Sprite> fillingSprite;
-
-
+        std::shared_ptr<Sounds> sound;
         sf::Texture backgroundTexture;
         std::unique_ptr<sf::Sprite> backgroundSprite;
+        sf::Texture tilesetTexture;
+        std::unique_ptr<sf::Sprite> tilesetSprite;
 
-
-        unsigned short coinCounter;
-        std::shared_ptr<Sounds> sound;
+        
 
     public:
 
