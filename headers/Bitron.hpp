@@ -50,5 +50,6 @@ class Bitron
         // Setters
         void changeResetPosition(){resetPosition = false;}
         void updateBitronFromPlatform(float x,float y,float verticalSpeed,bool onGround,bool onPlatform,bool keyPressed,unsigned char jumpTimer);
+        void setDeadSprite();
 
 };

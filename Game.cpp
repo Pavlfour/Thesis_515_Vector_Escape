@@ -94,6 +94,7 @@ void Game::update()
         sound->stopBackgroundMusic();
         isTerminated = true;
         sound->playGameOver();
+        bitron.setDeadSprite();
         return;
     }
     // Winner

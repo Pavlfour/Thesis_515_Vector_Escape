@@ -391,4 +391,7 @@ void Bitron::drawBitron(sf::RenderWindow& window)
     window.draw(*bitronSprite);
 }
 
-
+void Bitron::setDeadSprite()
+{
+    bitronSprite->setTextureRect(sf::IntRect({0,64},{32,32}));
+}

@@ -15,22 +15,9 @@ class windowText
             coinText->setOutlineColor(sf::Color::Black);
             coinText->setScale({0.8f,0.8f});
             coinText->setString("COINS:"+std::to_string(0));
-
-            setMainMenuText();
             
         }
 
-        void setMainMenuText()
-        {
-
-            stateText->setFillColor(sf::Color({45,105,220}));
-            stateText->setOutlineThickness(2.5f);
-            stateText->setOutlineColor(sf::Color({160,190,240}));
-            stateText->setCharacterSize(30);
-            stateText->setScale({3.5f,3.7f});
-            stateText->setString("VECTOR ESCAPE");
-            stateText->setPosition({190.f,50.f});
-        }
 
         void setGameOverText(float x,float y)
         {
