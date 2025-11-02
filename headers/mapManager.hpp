@@ -58,7 +58,7 @@ class mapManager
         std::shared_ptr<windowText> text;
 
         // utils
-        void convertMap(std::vector<std::vector<unsigned short>> map);
+        void convertMap(std::vector<std::vector<unsigned char>> map);
         void drawMap(sf::RenderWindow& window);
         std::array<Cell,4> mapCollision(sf::FloatRect bounds);
         std::vector<std::unique_ptr<Beamlok>> beamloks;

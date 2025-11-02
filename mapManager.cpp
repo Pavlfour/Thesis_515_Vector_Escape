@@ -74,14 +74,14 @@ void mapManager::addCoin(float posX,float posY)
 
 
 
-void mapManager::convertMap(std::vector<std::vector<unsigned short>> map)
+void mapManager::convertMap(std::vector<std::vector<unsigned char>> map)
 {
     std::vector<std::vector<Cell>> convertedMap;
 
     for(const auto& row: map)
     {
         std::vector<Cell> newRow;
-        for(const unsigned short tile: row)
+        for(const unsigned char tile: row)
         {
             switch (tile)
             {
