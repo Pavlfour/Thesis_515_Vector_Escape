@@ -16,7 +16,7 @@ class platform
     public:
         platform();
         // Common methods
-        void drawPlatform(sf::RenderWindow& window);
+        void drawPlatform(sf::RenderWindow* window);
         virtual void platformUpdate(Bitron& bitron) = 0;
 
 };

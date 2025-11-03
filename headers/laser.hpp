@@ -20,7 +20,7 @@ class laser
 
     public:
         laser(bool direction,sf::Vector2f currentPos,std::shared_ptr<Sounds> sound);
-        void drawLaser(sf::RenderWindow& window);
+        void drawLaser(sf::RenderWindow* window);
         bool updateLaser(mapManager* currentMap,Bitron& bitron,Health& health);
 
 };

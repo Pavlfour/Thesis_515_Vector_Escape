@@ -80,8 +80,8 @@ bool Voltwing::updateVoltwing(Bitron& bitron)
 
 }
 
-void Voltwing::drawVoltwing(sf::RenderWindow& window)
+void Voltwing::drawVoltwing(sf::RenderWindow* window)
 {
     voltwingSprite->setPosition({voltwingPos.x, voltwingPos.y});
-    window.draw(*voltwingSprite);
+    window->draw(*voltwingSprite);
 }

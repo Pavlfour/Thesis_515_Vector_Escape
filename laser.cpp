@@ -54,8 +54,8 @@ bool laser::updateLaser(mapManager* currentMap,Bitron& bitron,Health& health)
     
 }
 
-void laser::drawLaser(sf::RenderWindow& window)
+void laser::drawLaser(sf::RenderWindow* window)
 {
     laserSprite->setPosition({currentPos});
-    window.draw(*laserSprite);
+    window->draw(*laserSprite);
 }

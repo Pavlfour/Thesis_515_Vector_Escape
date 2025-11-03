@@ -31,6 +31,6 @@ class Voltwing
         Voltwing(std::vector<sf::Vector2f> points, float speed,std::shared_ptr<Sounds> sound);
 
         bool updateVoltwing(Bitron& bitron);
-        void drawVoltwing(sf::RenderWindow& window);
+        void drawVoltwing(sf::RenderWindow* window);
 
 };

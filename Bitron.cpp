@@ -1,4 +1,5 @@
 #include "headers/Bitron.hpp"
+#include "headers/mapManager.hpp"
 
 Bitron::Bitron(std::shared_ptr<Sounds> sound)
 :verticalSpeed(0.0f),
@@ -384,11 +385,11 @@ void Bitron::bitronIsDamaged()
     isDamaged = true;
 }
 
-void Bitron::drawBitron(sf::RenderWindow& window)
+void Bitron::drawBitron(sf::RenderWindow* window)
 {
 
     bitronSprite->setPosition({x,y});
-    window.draw(*bitronSprite);
+    window->draw(*bitronSprite);
 }
 
 void Bitron::setDeadSprite()

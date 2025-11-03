@@ -17,7 +17,7 @@ class coin
     public:
         coin(float x, float y);
 
-        void drawCoin(sf::RenderWindow& window);
+        void drawCoin(sf::RenderWindow* window);
         bool coinUpdate(Bitron& bitron);
 
 };

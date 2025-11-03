@@ -11,7 +11,7 @@ class Health
 
     public:
         Health();
-        void drawHealth(sf::RenderWindow& window);
+        void drawHealth(sf::RenderWindow* window);
         void updateHealth(sf::View& view);
         void damageTaken();
 

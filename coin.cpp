@@ -41,10 +41,10 @@ bool coin::coinUpdate(Bitron& bitron)
 
 }
 
-void coin::drawCoin(sf::RenderWindow& window)
+void coin::drawCoin(sf::RenderWindow* window)
 {
 
     coinSprite->setPosition({x,y});
-    window.draw(*coinSprite);
+    window->draw(*coinSprite);
 
 }

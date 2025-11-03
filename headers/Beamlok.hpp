@@ -33,7 +33,7 @@ class Beamlok
     public:
         Beamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed,std::shared_ptr<Sounds> sound);
         void updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health);
-        void drawBeamlok(sf::RenderWindow& window);
+        void drawBeamlok(sf::RenderWindow* window);
         
 
 };

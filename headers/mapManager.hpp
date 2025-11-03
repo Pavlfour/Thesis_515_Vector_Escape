@@ -3,7 +3,6 @@
 #include <SFML/Audio.hpp>
 #include <vector>
 #include <cmath>
-#include <algorithm>
 #include <memory>
 
 #include "Globals.hpp"
@@ -18,6 +17,7 @@
 #include "Beamlok.hpp"
 #include "laser.hpp"
 #include "windowText.hpp"
+#include "Window.hpp"
 #define cellSize 64
 
 class windowText;
@@ -33,6 +33,7 @@ class laser;
 
 class mapManager
 {
+
     private:
         unsigned short currentMapIndex,currentMapHeight,currentMapWidth,coinCounter;
 
@@ -44,22 +45,22 @@ class mapManager
         std::vector<std::unique_ptr<Voltwing>> voltwings;
         std::vector<std::unique_ptr<laser>> lasers;
         std::shared_ptr<Sounds> sound;
-        sf::Texture backgroundTexture;
-        std::unique_ptr<sf::Sprite> backgroundSprite;
+
         sf::Texture tilesetTexture;
         std::unique_ptr<sf::Sprite> tilesetSprite;
 
+        Bitron bitron;
+        Health health;
+        
         
 
     public:
-
-        mapManager(std::shared_ptr<Sounds> sound,std::shared_ptr<windowText> text);
-
-        std::shared_ptr<windowText> text;
+        Window* window;
+        mapManager(std::shared_ptr<Sounds> sound,Window* window);
 
         // utils
         void convertMap(std::vector<std::vector<unsigned char>> map);
-        void drawMap(sf::RenderWindow& window);
+        void drawMap(sf::RenderWindow* window,float centerX,float centerY);
         std::array<Cell,4> mapCollision(sf::FloatRect bounds);
         std::vector<std::unique_ptr<Beamlok>> beamloks;
 
@@ -73,18 +74,43 @@ class mapManager
         // Update
         void nextMap();
         void checkPlatformCollision(sf::Sprite& platform);
-        void updateCamera(sf::RenderWindow& window,sf::View& view,float x,float y);
-        void updatePlatforms(Bitron& bitron);
-        void updateCoins(Bitron& bitron,Health& health);
-        void updateVoltwings(Bitron& bitron,Health& health);
-        void updateCoinsText(sf::View& view);
-        void updateBeamloks(Bitron& bitron,Health& health);
+        
+        void updatePlatforms();
+        void updateCoins();
+        void updateVoltwings();
+        void updateBeamloks();
         bool checkForTiles(short startX,short endX,short y);
         bool projectileCollicion(short x,short y);
+
+        void updateMapComponents()
+        {
+            bitron.updateBitron(*this,health);
+            window->updateCamera(bitron.getX(),bitron.getY(),mapPixelWidth,mapPixelHeight);
+            updatePlatforms();
+            updateCoins();
+            updateVoltwings();
+            updateBeamloks();
+            health.updateHealth(window->getView());
+        }
+
+        void drawMapComponents()
+        {
+            
+            drawMap(window->GetRenderWindow(),window->getCenterX(),window->getCenterY());
+            window->drawText(currentMapIndex);
+            health.drawHealth(window->GetRenderWindow());
+            bitron.drawBitron(window->GetRenderWindow());
+        }
 
         // Getters
         std::vector<std::vector<std::vector<Cell>>>& getMapPool(){return mapPool;}
         unsigned short getCurrentMapIndex() const {return currentMapIndex;}
         unsigned short getHeight()const{return currentMapHeight;}
         unsigned short getWidth()const{return currentMapWidth;}
+        unsigned short getMapPixelWidth()const{return mapPixelWidth;}
+        unsigned short getMapPixelHeight()const{return mapPixelHeight;}
+        bool checkHealth() const {return health.gameOver();}
+
+
+        void bitronDies() {  bitron.setDeadSprite();  }
 };

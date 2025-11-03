@@ -1,25 +1,20 @@
 #include "headers/mapManager.hpp"
 #include "mapDetailsHandler.cpp"
 
-mapManager::mapManager(std::shared_ptr<Sounds> sound,std::shared_ptr<windowText> text):
+mapManager::mapManager(std::shared_ptr<Sounds> sound,Window* window):
 sound(sound),
-text(text)
+bitron(sound),
+window(window)
 {
     currentMapIndex = 0;
     coinCounter = 0;
 
-    // Φορτώνουμε τις εικόνες
-    if(!backgroundTexture.loadFromFile("assets/sprites/background.png") || !tilesetTexture.loadFromFile("assets/sprites/Tileset.png"))
+    // static components   
+    if(!tilesetTexture.loadFromFile("assets/sprites/tileset.png"))
     {
-        throw std::runtime_error("Failed to load textures");
+        throw std::runtime_error("Failed to load tileset.png");
     }
-
-    // Background Image
-    backgroundSprite = std::make_unique<sf::Sprite>(backgroundTexture);
-    // static components
     tilesetSprite = std::make_unique<sf::Sprite>(tilesetTexture);
-
-
 
     // Αρχικοποίηση των πιστών στην λίστα
     convertMap(maps::map1);
@@ -110,10 +105,8 @@ void mapManager::convertMap(std::vector<std::vector<unsigned char>> map)
 
 
 
-void mapManager::drawMap(sf::RenderWindow& window)
+void mapManager::drawMap(sf::RenderWindow* window,float centerX,float centerY)
 {
-    // Background
-    window.draw(*backgroundSprite);
 
     // Έχει γίνει optimization για να ζωγραφίζονται μόνο τα τετράγωνα που είναι στην κεντρική οθόνη
     for (unsigned short a = floor((centerY - viewSize.y/2.f) / static_cast<float>(cellSize)); a < ceil((viewSize.y/2.f + centerY) / static_cast<float>(cellSize)); a++)
@@ -132,7 +125,7 @@ void mapManager::drawMap(sf::RenderWindow& window)
                 tilesetSprite->setTextureRect(sf::IntRect({cellSize, 0}, {cellSize, cellSize}));
 
             tilesetSprite->setPosition({static_cast<float>(b * cellSize), static_cast<float>(a * cellSize)});
-            window.draw(*tilesetSprite);
+            window->draw(*tilesetSprite);
         }
     }
 
@@ -157,11 +150,7 @@ void mapManager::drawMap(sf::RenderWindow& window)
     }
 
 
-    if(currentMapIndex < 3)
-        window.draw(text->getStateText());
 
-
-    window.draw(text->getCoinText());
 }
 
 // Η αρίθμηση του πίνακα 0,1,2,...
@@ -239,24 +228,9 @@ void mapManager::nextMap()
  
 }
 
-void mapManager::updateCamera(sf::RenderWindow& window,sf::View& view,float x,float y)
-{
 
-        centerX = x + 16.0f;
-        centerY = y + 16.0f;
 
-        centerX = std::clamp(centerX, viewSize.x/2.f, mapPixelWidth - viewSize.x/2.f);
-        centerY = std::clamp(centerY, viewSize.y/2.f, mapPixelHeight - viewSize.y/2.f);
-
-        view.setCenter({centerX, centerY});
-        window.setView(view);
-
-        // Background update
-        backgroundSprite->setPosition({view.getCenter().x - 512.f -32.f,view.getCenter().y - 464.f});
-
-}
-
-void mapManager::updatePlatforms(Bitron& bitron)
+void mapManager::updatePlatforms()
 {
     for(auto& plat : platforms)
     {
@@ -265,7 +239,7 @@ void mapManager::updatePlatforms(Bitron& bitron)
 
 }
 
-void mapManager::updateCoins(Bitron& bitron,Health& health)
+void mapManager::updateCoins()
 {
 
 for (auto it = coins.begin(); it != coins.end(); )
@@ -282,7 +256,7 @@ for (auto it = coins.begin(); it != coins.end(); )
             health.addHealth();
             sound->playLife();
         }
-        text->updateCoinCounter(coinCounter);
+        window->text->updateCoinCounter(coinCounter);
     }
     else
     {
@@ -293,7 +267,7 @@ for (auto it = coins.begin(); it != coins.end(); )
 
 }
 
-void mapManager::updateVoltwings(Bitron& bitron,Health& health)
+void mapManager::updateVoltwings()
 {
     for(auto& voltwing : voltwings)
     {
@@ -307,12 +281,8 @@ void mapManager::updateVoltwings(Bitron& bitron,Health& health)
     }
 }
 
-void mapManager::updateCoinsText(sf::View& view)
-{
-    text->updateCoinPosition(centerX - view.getSize().x/2.f + 4.f,centerY - view.getSize().y/2.f + 32.f);
-}
 
-void mapManager::updateBeamloks(Bitron& bitron,Health& health)
+void mapManager::updateBeamloks()
 {
     for(auto& beamlok : beamloks)
     {

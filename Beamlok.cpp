@@ -156,7 +156,7 @@ void Beamlok::updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health
 
 
 
-void Beamlok::drawBeamlok(sf::RenderWindow& window)
+void Beamlok::drawBeamlok(sf::RenderWindow* window)
 {
 
     beamlokSprite->setPosition({beamlokPos.x, beamlokPos.y});
@@ -168,5 +168,5 @@ void Beamlok::drawBeamlok(sf::RenderWindow& window)
         pro->drawLaser(window);
     }
 
-    window.draw(*beamlokSprite);
+    window->draw(*beamlokSprite);
 }
