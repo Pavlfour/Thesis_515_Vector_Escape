@@ -14,3 +14,11 @@ enum Cell{
     TriggerTile,
     ExitTile
 };
+
+enum GameState
+{
+    MainMenu = 1,
+    Running,
+    GameOver,
+    Finished
+};

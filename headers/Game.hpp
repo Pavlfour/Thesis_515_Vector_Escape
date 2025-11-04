@@ -4,13 +4,7 @@
 #include "Globals.hpp"
 #include "Window.hpp"
 
-enum GameState
-{
-    MainMenu = 1,
-    Running,
-    GameOver,
-    Finished
-};
+enum GameState;
 
 class Game
 {

@@ -182,7 +182,6 @@ void addMapComponents(mapManager* currentMap)
     {
         case 1:
 
-            currentMap->window->text->setSecondMapText();
             // Voltwings
             currentMap->addVoltwing({{2*cellSize+16.f,6*cellSize+16.f},{4*cellSize + 16.f,6*cellSize+16.f}},0.5f);
             // Coins
@@ -197,7 +196,6 @@ void addMapComponents(mapManager* currentMap)
 
         case 2:
 
-            currentMap->window->text->setThirdMapText();
             // Coins
             currentMap->addCoin(5*cellSize - 41, 2*cellSize - 41);
             currentMap->addCoin(8*cellSize - 41, 2*cellSize - 41);

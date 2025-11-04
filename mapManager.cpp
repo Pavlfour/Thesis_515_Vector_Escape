@@ -218,6 +218,16 @@ void mapManager::nextMap()
     voltwings.clear();
     beamloks.clear();
     currentMapIndex++;
+
+    if(currentMapIndex == 1)
+    {
+        window->text->setSecondMapText();
+    }
+    else if(currentMapIndex == 2)
+    {
+        window->text->setThirdMapText();
+    }
+
     currentMapHeight = mapPool[currentMapIndex].size();
     currentMapWidth = mapPool[currentMapIndex][0].size();
 
