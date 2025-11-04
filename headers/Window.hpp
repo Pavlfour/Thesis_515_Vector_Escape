@@ -16,6 +16,7 @@ class Window
         std::unique_ptr<sf::Sprite> mainMenuSprite;
         std::unique_ptr<sf::Sprite> backgroundSprite;
         float centerX, centerY;
+        bool isRunning;
 
     public:
 
@@ -48,7 +49,7 @@ class Window
 
         void drawText(unsigned short currentMapIndex)
         {
-            if (currentMapIndex < 3)
+            if (currentMapIndex < 3 || !isRunning)
             {
                 window.draw(text->getStateText());
             }
@@ -103,11 +104,13 @@ class Window
         void gameOver()
         {
             text->setGameOverText(view.getCenter().x - 205.f,view.getCenter().y - 128.f);
+            isRunning = false;
         }
 
         void winner()
         {
             text->setWinnerText(view.getCenter().x - 130.f,view.getCenter().y - 128.f);
+            isRunning = false;
         }
 
         sf::View& getView()

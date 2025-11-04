@@ -79,8 +79,15 @@ class mapManager
         void updateCoins();
         void updateVoltwings();
         void updateBeamloks();
+    
+        void updateBitron()
+        {
+            bitron.updateBitron(*this,health);
+        }
+
         bool checkForTiles(short startX,short endX,short y);
         bool projectileCollicion(short x,short y);
+
 
         void updateMapComponents()
         {

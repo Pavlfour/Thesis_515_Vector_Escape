@@ -64,6 +64,7 @@ void Game::update()
             window.gameOver();
             break;
         case GameState::Finished:
+            map.updateBitron();
             window.winner();
             break;
     }

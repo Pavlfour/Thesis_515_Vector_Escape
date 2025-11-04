@@ -1,6 +1,7 @@
 #include "headers/Window.hpp"
 
 Window::Window():
+isRunning(true),
 text(std::make_unique<windowText>())
 {
     view = sf::View({0,0},{viewSize.x,viewSize.y});
