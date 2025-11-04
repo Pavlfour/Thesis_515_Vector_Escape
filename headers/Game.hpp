@@ -1,7 +1,5 @@
 #pragma once
 #include "mapManager.hpp"
-#include "Sounds.hpp"
-#include "Globals.hpp"
 #include "Window.hpp"
 
 enum GameState;
@@ -20,11 +18,9 @@ class Game
         float m_elapsed;
 
         // Main components
-        std::shared_ptr<Sounds> sound;
         GameState gameState{MainMenu};
         Window window;
         mapManager map;
-        
 
         void update();
         void draw();

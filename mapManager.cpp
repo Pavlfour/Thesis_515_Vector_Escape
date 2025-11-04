@@ -1,8 +1,8 @@
 #include "headers/mapManager.hpp"
 #include "mapDetailsHandler.cpp"
 
-mapManager::mapManager(std::shared_ptr<Sounds> sound,Window* window):
-sound(sound),
+mapManager::mapManager(Window* window):
+sound(std::make_shared<Sounds>()),
 bitron(sound),
 window(window)
 {
@@ -149,8 +149,15 @@ void mapManager::drawMap(sf::RenderWindow* window,float centerX,float centerY)
         beamlok->drawBeamlok(window);
     }
 
+}
 
-
+void mapManager::drawMapComponents()
+{
+    
+    drawMap(window->GetRenderWindow(),window->getCenterX(),window->getCenterY());
+    window->drawText(currentMapIndex);
+    health.drawHealth(window->GetRenderWindow());
+    bitron.drawBitron(window->GetRenderWindow());
 }
 
 // Η αρίθμηση του πίνακα 0,1,2,...
@@ -298,6 +305,17 @@ void mapManager::updateBeamloks()
     {
         beamlok->updateBeamlok(bitron,this,health);
     }
+}
+
+void mapManager::updateMapComponents()
+{
+    bitron.updateBitron(*this,health);
+    updatePlatforms();
+    window->updateCamera(bitron.getX(),bitron.getY(),mapPixelWidth,mapPixelHeight);
+    updateCoins();
+    updateVoltwings();
+    updateBeamloks();
+    health.updateHealth(window->getView());
 }
 
 

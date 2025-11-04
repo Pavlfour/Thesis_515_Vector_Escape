@@ -1,8 +1,7 @@
 #include "headers/Game.hpp"
 
 Game::Game():
-sound(std::make_shared<Sounds>()),
-map(sound,&window),
+map(&window),
 m_elapsed(0.f)
 {
     m_clock.restart();
@@ -36,7 +35,7 @@ void Game::update()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space))
             {
                 gameState = Running;
-                sound->playBackgroundMusic();
+                map.mapEventAssist();
             }
             break;
         case GameState::Running:
@@ -44,28 +43,23 @@ void Game::update()
             if(map.checkHealth())
             {
                 window.gameOver();
-                sound->stopBackgroundMusic();
-                sound->playGameOver();
-                map.bitronDies();
+                map.mapEventAssist(2);
                 gameState = GameOver;
                 return;
             }
             else if(map.getCurrentMapIndex() == 9)
             {
                 window.winner();
-                sound->stopBackgroundMusic();
-                sound->playWin();
+                map.mapEventAssist(3);
                 gameState = Finished;
                 return;
             }
             map.updateMapComponents();
             break;
         case GameState::GameOver:
-            window.gameOver();
             break;
         case GameState::Finished:
             map.updateBitron();
-            window.winner();
             break;
     }
 
