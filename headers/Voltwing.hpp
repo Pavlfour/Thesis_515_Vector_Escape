@@ -25,12 +25,11 @@ class Voltwing
         size_t currentTargetIndex;
         std::vector<sf::Vector2f>pathPoints;
 
-        std::shared_ptr<Sounds> sound;
 
     public:
-        Voltwing(std::vector<sf::Vector2f> points, float speed,std::shared_ptr<Sounds> sound);
+        Voltwing(std::vector<sf::Vector2f> points, float speed);
 
-        bool updateVoltwing(Bitron& bitron);
+        bool updateVoltwing(const sf::FloatRect& bitronBounds,bool bitronIsDamaged);
         void drawVoltwing(sf::RenderWindow* window);
 
 };

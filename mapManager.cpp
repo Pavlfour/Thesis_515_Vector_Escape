@@ -41,8 +41,7 @@ void mapManager::addVoltwing(std::initializer_list<sf::Vector2f> points, float s
 {
     voltwings.emplace_back(std::make_unique<Voltwing>(
         std::vector<sf::Vector2f>(points),
-        speed,
-        sound
+        speed
     ));
 }
 
@@ -262,7 +261,7 @@ void mapManager::updateCoins()
 for (auto it = coins.begin(); it != coins.end(); )
 {
 
-    if ((*it)->coinUpdate(bitron))
+    if ((*it)->coinUpdate(sf::FloatRect({bitron.getX(),bitron.getY()},bitronSize)))
     {
         sound->playCoin();
         it = coins.erase(it);
@@ -289,7 +288,7 @@ void mapManager::updateVoltwings()
     for(auto& voltwing : voltwings)
     {
         
-        if((*voltwing).updateVoltwing(bitron))
+        if((*voltwing).updateVoltwing(sf::FloatRect({bitron.getX(),bitron.getY()},bitronSize),bitron.getDamageStatus()))
         {
                 health.damageTaken();
                 bitron.bitronIsDamaged();
