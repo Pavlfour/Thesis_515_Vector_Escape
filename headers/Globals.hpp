@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/System/Vector2.hpp>
 
 constexpr const int cellSize = 64;
 constexpr const unsigned int windowWidth = 1280;

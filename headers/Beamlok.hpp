@@ -1,14 +1,12 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <cmath>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include "Globals.hpp"
 #include "mapManager.hpp"
-#include "Sounds.hpp"
 #include "laser.hpp"
-#include "Health.hpp"
 
 class mapManager;
 class laser;
-class Health;
 
 class Beamlok
 {
@@ -27,13 +25,15 @@ class Beamlok
         sf::Vector2f target;
         sf::Vector2f beamlokPos;
 
-        std::shared_ptr<Sounds> sound;
         std::vector<std::unique_ptr<laser>> projectiles;
 
     public:
-        Beamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed,std::shared_ptr<Sounds> sound);
-        void updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health);
+
+        Beamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed);
+
+        unsigned char updateBeamlok(sf::FloatRect bitronBounds,bool bitronIsDamaged,mapManager* currentMap);
         void drawBeamlok(sf::RenderWindow* window);
+        unsigned char updateAnimation();
         
 
 };

@@ -1,7 +1,6 @@
 #include "headers/laser.hpp"
 
-laser::laser(bool direction,sf::Vector2f currentPos,std::shared_ptr<Sounds> sound):
-sound(sound),
+laser::laser(bool direction,sf::Vector2f currentPos):
 totalDistance(0.f)
 {
     this->direction = direction;
@@ -23,35 +22,29 @@ totalDistance(0.f)
 }
 
 
-bool laser::updateLaser(mapManager* currentMap,Bitron& bitron,Health& health)
+unsigned char laser::updateLaser(mapManager* currentMap,bool bitronIsDamaged,const sf::FloatRect& bitronBounds)
 {
-
     // Τσεκάρουμε για τυχόν σύγκρουση μεταξύ Bitron και Laser
     sf::FloatRect laserBounds =sf::FloatRect({currentPos.x, currentPos.y}, {10.f, 5.f});
-    sf::FloatRect bitronBounds({bitron.getX()+2.f, bitron.getY()}, {30.0f, 32.0f});
 
     // Η θέση στο X
-    short x = (direction) ? floor((currentPos.x + 10.f) / 64.f) : floor((currentPos.x) / 64.f);
+    short x = (direction) ? floor((currentPos.x + 10.f) / static_cast<float>(cellSize)) : floor((currentPos.x) / static_cast<float>(cellSize));
     // Η θέση στο Y
-    short y = floor(currentPos.y / 64.f);
+    short y = floor(currentPos.y / static_cast<float>(cellSize));
 
-    if(currentMap->projectileCollicion(x,y) && (!bitronBounds.findIntersection(laserBounds) || bitron.getDamageStatus()) &&
-        (abs(totalDistance) < 416.f ))
+    if(currentMap->projectileCollicion(x,y) && (!bitronBounds.findIntersection(laserBounds) || bitronIsDamaged) &&
+        (abs(totalDistance) < static_cast<float>(7*cellSize - 32) ))
     {
         currentPos.x += speed;
         totalDistance += speed;
-        return true;
+        return 1;
     }
-    else if(bitronBounds.findIntersection(laserBounds) && !bitron.getDamageStatus())
+    else if(bitronBounds.findIntersection(laserBounds) && !bitronIsDamaged)
     {
-        sound->playDie();
-        health.damageTaken();
-        bitron.bitronIsDamaged();
-        return false;
+        return 2;
     }
-    
-    return false;
-    
+
+    return 3;
 }
 
 void laser::drawLaser(sf::RenderWindow* window)

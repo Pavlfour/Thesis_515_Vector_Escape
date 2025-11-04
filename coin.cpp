@@ -1,5 +1,4 @@
 #include "headers/coin.hpp"
-#include <String>
 
 coin::coin(float x,float y):
 frameTimer(0.0f),
@@ -26,9 +25,7 @@ bool coin::coinUpdate(const sf::FloatRect& bitronBounds)
     }
     animationIterator++;
     coinSprite->setTextureRect(sf::IntRect({currentFrame*18,0},{18,18}));
-
-
-    ///////////////////////////////////////                ///////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     // Αλλάξαμε το πλαίσιο ώστε να είναι πιο ακριβής η επαφή με τον παίκτη
     sf::FloatRect coinBounds({x + 7.f, y + 5.f}, {4.0f, 8.0f});
@@ -42,7 +39,6 @@ bool coin::coinUpdate(const sf::FloatRect& bitronBounds)
 
 void coin::drawCoin(sf::RenderWindow* window)
 {
-
     coinSprite->setPosition({x,y});
     window->draw(*coinSprite);
 

@@ -58,7 +58,7 @@ void mapManager::addCircularPlatform(sf::Vector2f circleCenter, float radius, fl
 
 void mapManager::addBeamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed)
 {
-    beamloks.emplace_back(std::make_unique<Beamlok>(startPos,endPos,speed,sound));
+    beamloks.emplace_back(std::make_unique<Beamlok>(startPos,endPos,speed));
 }
 
 void mapManager::addCoin(float posX,float posY)
@@ -297,12 +297,24 @@ void mapManager::updateVoltwings()
     }
 }
 
-
 void mapManager::updateBeamloks()
 {
+    // decoupled sound from beamloks and lasers
     for(auto& beamlok : beamloks)
     {
-        beamlok->updateBeamlok(bitron,this,health);
+        switch((*beamlok).updateBeamlok(sf::FloatRect({bitron.getX(),bitron.getY()},bitronSize),bitron.getDamageStatus(),this))
+        {
+            case 1:
+                sound->playShoot();
+                break;
+            case 2:
+                sound->playDie();
+                health.damageTaken();
+                bitron.bitronIsDamaged();
+                break;
+            default:
+                break;
+        }
     }
 }
 

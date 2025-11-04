@@ -30,7 +30,7 @@ bool Voltwing::updateVoltwing(const sf::FloatRect& bitronBounds,bool bitronIsDam
     }
     animationIterator++;
     voltwingSprite->setTextureRect(sf::IntRect({currentFrame*32,0},{32,32}));
-    ////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
     // Αλλάξαμε το πλαίσιο ώστε να είναι πιο ακριβής η επαφή με τον παίκτη
     sf::FloatRect voltwingBounds({voltwingPos.x + 6.f, voltwingPos.y + 4.f}, {20.0f, 22.0f});
