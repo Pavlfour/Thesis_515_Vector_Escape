@@ -34,7 +34,7 @@ class Bitron
 
         void bitronIsDamaged();
         void updateAnimation();
-        void updateBitron(mapManager& map,Health& health);
+        bool updateBitron(mapManager& map);
         void drawBitron(sf::RenderWindow* window);
     
         // Getters

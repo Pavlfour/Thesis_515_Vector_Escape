@@ -76,7 +76,7 @@ class mapManager
         void updateCoins();
         void updateVoltwings();
         void updateBeamloks();
-        void updateBitron() { bitron.updateBitron(*this,health); }
+        void updateBitron() { bitron.updateBitron(*this); }
         void updateMapComponents();
 
         // Draw

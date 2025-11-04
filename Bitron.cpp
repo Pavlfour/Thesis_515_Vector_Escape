@@ -78,8 +78,10 @@ void Bitron::updateAnimation()
 
 }
 
-void Bitron::updateBitron(mapManager& map,Health& health)
+bool Bitron::updateBitron(mapManager& map)
 {
+
+    bool temp{false};
 
     // skipping maps (Cheating!!)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W) && advanceMap && map.getCurrentMapIndex() < 9)
@@ -87,7 +89,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
         advanceMap = false;
         resetPosition = false;
         map.nextMap();
-        return;
+        return temp;
     }
     else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W))
     {
@@ -137,7 +139,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
         verticalSpeed = 0.0f;
         jumpTimer = 0;
         resetPosition = true;
-        return;
+        return temp;
     }
 
     // Animation part
@@ -167,7 +169,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
             {
                 sound->playDie();
                 bitronIsDamaged();
-                health.damageTaken();
+                temp = true;
                 x += 6.f*movementSpeed;
             }
         }
@@ -204,7 +206,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
             {
                 sound->playDie();
                 bitronIsDamaged();
-                health.damageTaken();
+                temp = true;
                 x -= 6.f*movementSpeed;
             }
         }
@@ -240,7 +242,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
         sound->playNext();
         map.nextMap();
         resetPosition = false;
-        return;
+        return temp;
     }
 
     // JUMP
@@ -259,7 +261,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
             {
                 sound->playDie();
                 bitronIsDamaged();
-                health.damageTaken();
+                temp = true;
                 verticalSpeed = 2.f;
             }
         }
@@ -302,7 +304,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
                     {
                         sound->playDie();
                         bitronIsDamaged();
-                        health.damageTaken();
+                        temp = true;
                         verticalSpeed = 2.f;
                     }
                     else if(verticalSpeed != 0.f)
@@ -322,7 +324,7 @@ void Bitron::updateBitron(mapManager& map,Health& health)
                     {
                         sound->playDie();
                         bitronIsDamaged();
-                        health.damageTaken();
+                        temp = true;
                         verticalSpeed = -2.0f;
                         onGround = false;
                     }
@@ -366,6 +368,8 @@ void Bitron::updateBitron(mapManager& map,Health& health)
         verticalSpeed = 0.0f;
         y = 0.0f;
     }
+
+    return temp;
 
 }
 

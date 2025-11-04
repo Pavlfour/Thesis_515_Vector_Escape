@@ -320,7 +320,10 @@ void mapManager::updateBeamloks()
 
 void mapManager::updateMapComponents()
 {
-    bitron.updateBitron(*this,health);
+    // Unit under test
+    if(bitron.updateBitron(*this))
+        health.damageTaken();
+
     updatePlatforms();
     window->updateCamera(bitron.getX(),bitron.getY(),mapPixelWidth,mapPixelHeight);
     updateCoins();
