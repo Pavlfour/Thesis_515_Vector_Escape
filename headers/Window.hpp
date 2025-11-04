@@ -17,14 +17,35 @@ class Window
         std::unique_ptr<sf::Sprite> mainMenuSprite,backgroundSprite;
         float centerX, centerY;
         bool isRunning;
+        std::unique_ptr<windowText> text;
 
     public:
-
-        std::unique_ptr<windowText> text;
 
         Window();
         bool windowIsDone();
         void drawText(unsigned short currentMapIndex);
+
+        void updateText(unsigned short currentMapIndex)
+        {
+            switch(currentMapIndex)
+            {
+                case 1:
+                    text->setSecondMapText();
+                    break;
+                case 2:
+                    text->setThirdMapText();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        void updateCoinText(unsigned short coinCounter)
+        {
+            text->updateCoinCounter(coinCounter);
+        }
+
         void beginDraw();
         void backgroundDraw();
         void mainMenuDraw();

@@ -225,13 +225,9 @@ void mapManager::nextMap()
     beamloks.clear();
     currentMapIndex++;
 
-    if(currentMapIndex == 1)
+    if(currentMapIndex < 3)
     {
-        window->text->setSecondMapText();
-    }
-    else if(currentMapIndex == 2)
-    {
-        window->text->setThirdMapText();
+        window->updateText(currentMapIndex);
     }
 
     currentMapHeight = mapPool[currentMapIndex].size();
@@ -243,7 +239,6 @@ void mapManager::nextMap()
     addMapComponents(this);
  
 }
-
 
 
 void mapManager::updatePlatforms()
@@ -272,7 +267,7 @@ for (auto it = coins.begin(); it != coins.end(); )
             health.addHealth();
             sound->playLife();
         }
-        window->text->updateCoinCounter(coinCounter);
+        window->updateCoinText(coinCounter);
     }
     else
     {
