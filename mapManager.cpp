@@ -1,25 +1,20 @@
 #include "headers/mapManager.hpp"
 #include "mapDetailsHandler.cpp"
 
-mapManager::mapManager(std::shared_ptr<Sounds> sound,std::shared_ptr<windowText> text):
-sound(sound),
-text(text)
+mapManager::mapManager(Window* window):
+sound(std::make_shared<Sounds>()),
+bitron(sound),
+window(window)
 {
     currentMapIndex = 0;
     coinCounter = 0;
 
-    // Φορτώνουμε τις εικόνες
-    if(!backgroundTexture.loadFromFile("assets/sprites/background.png") || !tilesetTexture.loadFromFile("assets/sprites/Tileset.png"))
+    // static components   
+    if(!tilesetTexture.loadFromFile("assets/sprites/tileset.png"))
     {
-        throw std::runtime_error("Failed to load textures");
+        throw std::runtime_error("Failed to load tileset.png");
     }
-
-    // Background Image
-    backgroundSprite = std::make_unique<sf::Sprite>(backgroundTexture);
-    // static components
     tilesetSprite = std::make_unique<sf::Sprite>(tilesetTexture);
-
-
 
     // Αρχικοποίηση των πιστών στην λίστα
     convertMap(maps::map1);
@@ -46,8 +41,7 @@ void mapManager::addVoltwing(std::initializer_list<sf::Vector2f> points, float s
 {
     voltwings.emplace_back(std::make_unique<Voltwing>(
         std::vector<sf::Vector2f>(points),
-        speed,
-        sound
+        speed
     ));
 }
 
@@ -64,7 +58,7 @@ void mapManager::addCircularPlatform(sf::Vector2f circleCenter, float radius, fl
 
 void mapManager::addBeamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed)
 {
-    beamloks.emplace_back(std::make_unique<Beamlok>(startPos,endPos,speed,sound));
+    beamloks.emplace_back(std::make_unique<Beamlok>(startPos,endPos,speed));
 }
 
 void mapManager::addCoin(float posX,float posY)
@@ -110,10 +104,8 @@ void mapManager::convertMap(std::vector<std::vector<unsigned char>> map)
 
 
 
-void mapManager::drawMap(sf::RenderWindow& window)
+void mapManager::drawMap(sf::RenderWindow* window,float centerX,float centerY)
 {
-    // Background
-    window.draw(*backgroundSprite);
 
     // Έχει γίνει optimization για να ζωγραφίζονται μόνο τα τετράγωνα που είναι στην κεντρική οθόνη
     for (unsigned short a = floor((centerY - viewSize.y/2.f) / static_cast<float>(cellSize)); a < ceil((viewSize.y/2.f + centerY) / static_cast<float>(cellSize)); a++)
@@ -132,7 +124,7 @@ void mapManager::drawMap(sf::RenderWindow& window)
                 tilesetSprite->setTextureRect(sf::IntRect({cellSize, 0}, {cellSize, cellSize}));
 
             tilesetSprite->setPosition({static_cast<float>(b * cellSize), static_cast<float>(a * cellSize)});
-            window.draw(*tilesetSprite);
+            window->draw(*tilesetSprite);
         }
     }
 
@@ -156,12 +148,15 @@ void mapManager::drawMap(sf::RenderWindow& window)
         beamlok->drawBeamlok(window);
     }
 
+}
 
-    if(currentMapIndex < 3)
-        window.draw(text->getStateText());
-
-
-    window.draw(text->getCoinText());
+void mapManager::drawMapComponents()
+{
+    
+    drawMap(window->GetRenderWindow(),window->getCenterX(),window->getCenterY());
+    window->drawText(currentMapIndex);
+    health.drawHealth(window->GetRenderWindow());
+    bitron.drawBitron(window->GetRenderWindow());
 }
 
 // Η αρίθμηση του πίνακα 0,1,2,...
@@ -229,6 +224,12 @@ void mapManager::nextMap()
     voltwings.clear();
     beamloks.clear();
     currentMapIndex++;
+
+    if(currentMapIndex < 3)
+    {
+        window->updateText(currentMapIndex);
+    }
+
     currentMapHeight = mapPool[currentMapIndex].size();
     currentMapWidth = mapPool[currentMapIndex][0].size();
 
@@ -239,24 +240,8 @@ void mapManager::nextMap()
  
 }
 
-void mapManager::updateCamera(sf::RenderWindow& window,sf::View& view,float x,float y)
-{
 
-        centerX = x + 16.0f;
-        centerY = y + 16.0f;
-
-        centerX = std::clamp(centerX, viewSize.x/2.f, mapPixelWidth - viewSize.x/2.f);
-        centerY = std::clamp(centerY, viewSize.y/2.f, mapPixelHeight - viewSize.y/2.f);
-
-        view.setCenter({centerX, centerY});
-        window.setView(view);
-
-        // Background update
-        backgroundSprite->setPosition({view.getCenter().x - 512.f -32.f,view.getCenter().y - 464.f});
-
-}
-
-void mapManager::updatePlatforms(Bitron& bitron)
+void mapManager::updatePlatforms()
 {
     for(auto& plat : platforms)
     {
@@ -265,13 +250,13 @@ void mapManager::updatePlatforms(Bitron& bitron)
 
 }
 
-void mapManager::updateCoins(Bitron& bitron,Health& health)
+void mapManager::updateCoins()
 {
 
 for (auto it = coins.begin(); it != coins.end(); )
 {
 
-    if ((*it)->coinUpdate(bitron))
+    if ((*it)->coinUpdate(sf::FloatRect({bitron.getX(),bitron.getY()},bitronSize)))
     {
         sound->playCoin();
         it = coins.erase(it);
@@ -282,7 +267,7 @@ for (auto it = coins.begin(); it != coins.end(); )
             health.addHealth();
             sound->playLife();
         }
-        text->updateCoinCounter(coinCounter);
+        window->updateCoinText(coinCounter);
     }
     else
     {
@@ -293,12 +278,12 @@ for (auto it = coins.begin(); it != coins.end(); )
 
 }
 
-void mapManager::updateVoltwings(Bitron& bitron,Health& health)
+void mapManager::updateVoltwings()
 {
     for(auto& voltwing : voltwings)
     {
         
-        if((*voltwing).updateVoltwing(bitron))
+        if((*voltwing).updateVoltwing(sf::FloatRect({bitron.getX(),bitron.getY()},bitronSize),bitron.getDamageStatus()))
         {
                 health.damageTaken();
                 bitron.bitronIsDamaged();
@@ -307,17 +292,39 @@ void mapManager::updateVoltwings(Bitron& bitron,Health& health)
     }
 }
 
-void mapManager::updateCoinsText(sf::View& view)
+void mapManager::updateBeamloks()
 {
-    text->updateCoinPosition(centerX - view.getSize().x/2.f + 4.f,centerY - view.getSize().y/2.f + 32.f);
-}
-
-void mapManager::updateBeamloks(Bitron& bitron,Health& health)
-{
+    // decoupled sound from beamloks and lasers
     for(auto& beamlok : beamloks)
     {
-        beamlok->updateBeamlok(bitron,this,health);
+        switch((*beamlok).updateBeamlok(sf::FloatRect({bitron.getX(),bitron.getY()},bitronSize),bitron.getDamageStatus(),this))
+        {
+            case 1:
+                sound->playShoot();
+                break;
+            case 2:
+                sound->playDie();
+                health.damageTaken();
+                bitron.bitronIsDamaged();
+                break;
+            default:
+                break;
+        }
     }
+}
+
+void mapManager::updateMapComponents()
+{
+    // Unit under test
+    if(bitron.updateBitron(*this))
+        health.damageTaken();
+
+    updatePlatforms();
+    window->updateCamera(bitron.getX(),bitron.getY(),mapPixelWidth,mapPixelHeight);
+    updateCoins();
+    updateVoltwings();
+    updateBeamloks();
+    health.updateHealth(window->getView());
 }
 
 

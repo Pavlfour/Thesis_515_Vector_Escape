@@ -1,6 +1,10 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "mapManager.hpp"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include "Globals.hpp"
+
 
 class Bitron;
 
@@ -17,7 +21,7 @@ class coin
     public:
         coin(float x, float y);
 
-        void drawCoin(sf::RenderWindow& window);
-        bool coinUpdate(Bitron& bitron);
+        void drawCoin(sf::RenderWindow* window);
+        bool coinUpdate(const sf::FloatRect& bitronBounds);
 
 };

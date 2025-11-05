@@ -1,20 +1,16 @@
 #include "headers/Beamlok.hpp"
 
-Beamlok::Beamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed,std::shared_ptr<Sounds> sound):
-sound(sound),
+Beamlok::Beamlok(sf::Vector2f startPos,sf::Vector2f endPos,float speed):
 currentFrame(0),
 animationIterator(0),
 forward(true),
 attackMode(false),
 fire(false)
 {
-
     this->startPos = startPos;
     this->endPos = endPos;
     this->speed = speed;
     this->beamlokPos = startPos;
-
-
 
     if(!beamlokTexture.loadFromFile("assets/sprites/Beamlok.png"))
     {
@@ -24,10 +20,9 @@ fire(false)
 
 }
 
-void Beamlok::updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health)
+unsigned char Beamlok::updateAnimation()
 {
-
-    ///////////////////////////////////////// Animation part ///////////////////////////////////////////////////////
+    unsigned char temp = 0;
     if(!attackMode)
     {
 
@@ -77,26 +72,32 @@ void Beamlok::updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health
 
             if(animationIterator >= 30)
             {
-                sound->playShoot();
+                temp = 1;
                 float offSetX = (forward) ? (beamlokPos.x + 28.f) : (beamlokPos.x - 6.f);
                 attackMode = false;
                 fire = false;
                 currentFrame = 0;
                 animationIterator = 0;
                 beamlokSprite->setTextureRect(sf::IntRect({0,0},{32,32}));
-                projectiles.emplace_back(std::make_unique<laser>(forward,sf::Vector2f{offSetX,beamlokPos.y+19.f},sound));
+                projectiles.emplace_back(std::make_unique<laser>(forward,sf::Vector2f{offSetX,beamlokPos.y+19.f}));
             }
         }
  
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    return temp;
+}
+
+
+unsigned char Beamlok::updateBeamlok(sf::FloatRect bitronBounds,bool bitronIsDamaged,mapManager* currentMap)
+{
+    unsigned char temp = updateAnimation();
 
     // Σε ποιά θέση είναι ο Beamlok
     short beamlokX = floor(beamlokPos.x / 64.f);
 
     // Σε ποιά θέση είναι ο Bitron
-    short bitronX = floor(bitron.getX() / 64.f);
+    short bitronX = floor(bitronBounds.position.x / 64.f);
 
     // Η θέση στο Y
     short height = floor(beamlokPos.y / 64.f);
@@ -105,18 +106,18 @@ void Beamlok::updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health
     bool tileExist = currentMap->checkForTiles(std::min(beamlokX,bitronX),std::max(beamlokX,bitronX),height);
 
     // Range
-    float rangeY = std::abs(bitron.getY() - beamlokPos.y);
-    float rangeX = std::abs(bitron.getX() - beamlokPos.x);
+    float rangeY = std::abs(bitronBounds.position.y - beamlokPos.y);
+    float rangeX = std::abs(bitronBounds.position.x - beamlokPos.x);
     
     bool sight{false};
     // Beamlok facing Bitron
     if(forward)
     {
-        if( (bitron.getX() - beamlokPos.x) > 0) sight = true;
+        if( (bitronBounds.position.x - beamlokPos.x) > 0) sight = true;
     }
     else
     {
-        if( (beamlokPos.x - bitron.getX()) > 0) sight = true;
+        if( (beamlokPos.x - bitronBounds.position.x) > 0) sight = true;
     }
 
     if ((!attackMode) && (rangeY < 32.f) && (rangeX < 384.f) && sight && !tileExist)
@@ -139,24 +140,30 @@ void Beamlok::updateBeamlok(Bitron& bitron,mapManager* currentMap,Health& health
 
     }
 
-
+    // Optimization for laser collision
+    bitronBounds.position.x += 2.f;
+    bitronBounds.size.x -= 2.f;
     for(auto pro = projectiles.begin(); pro != projectiles.end();)
     {
-        if(!((*pro)->updateLaser(currentMap,bitron,health)))
+        switch(((*pro)->updateLaser(currentMap,bitronIsDamaged,bitronBounds)))
         {
-            pro = projectiles.erase(pro);
-        }
-        else
-        {
-            pro++;
+            case 1:
+                pro++;
+                break;
+            case 2:
+                pro = projectiles.erase(pro);
+                return 2;
+                break;
+            case 3:
+                pro = projectiles.erase(pro);
+                break;
         }
     }
-
+    return temp;
 }
 
 
-
-void Beamlok::drawBeamlok(sf::RenderWindow& window)
+void Beamlok::drawBeamlok(sf::RenderWindow* window)
 {
 
     beamlokSprite->setPosition({beamlokPos.x, beamlokPos.y});
@@ -168,5 +175,5 @@ void Beamlok::drawBeamlok(sf::RenderWindow& window)
         pro->drawLaser(window);
     }
 
-    window.draw(*beamlokSprite);
+    window->draw(*beamlokSprite);
 }

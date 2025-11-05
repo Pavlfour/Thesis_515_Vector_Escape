@@ -11,13 +11,13 @@ totalHealthCount(3)
     healthSprite = std::make_unique<sf::Sprite>(healthTexture);
 }
 
-void Health::drawHealth(sf::RenderWindow& window)
+void Health::drawHealth(sf::RenderWindow* window)
 {
 
     for(short i=0;i<totalHealthCount;i++)
     {
         healthSprite->setPosition({i*32.f + x,y});
-        window.draw(*healthSprite);
+        window->draw(*healthSprite);
     }
 
 }

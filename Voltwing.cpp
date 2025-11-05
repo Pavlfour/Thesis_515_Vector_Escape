@@ -1,13 +1,12 @@
 #include "headers/Voltwing.hpp"
 
-Voltwing::Voltwing(std::vector<sf::Vector2f> points, float speed,std::shared_ptr<Sounds> sound):
+Voltwing::Voltwing(std::vector<sf::Vector2f> points, float speed):
 pathPoints(std::move(points)),
 frameTimer(0.0f),
 currentFrame(0),
 currentTargetIndex(1),
 forward(true),
 speed(speed),
-sound(sound),
 animationIterator(0)
 {
     voltwingPos = pathPoints[0];
@@ -19,7 +18,7 @@ animationIterator(0)
     voltwingSprite = std::make_unique<sf::Sprite>(voltwingTexture);
 }
 
-bool Voltwing::updateVoltwing(Bitron& bitron)
+bool Voltwing::updateVoltwing(const sf::FloatRect& bitronBounds,bool bitronIsDamaged)
 {
     ////////////////////// Animation part /////////////////////////////////////
     while(animationIterator >= 4)
@@ -31,13 +30,12 @@ bool Voltwing::updateVoltwing(Bitron& bitron)
     }
     animationIterator++;
     voltwingSprite->setTextureRect(sf::IntRect({currentFrame*32,0},{32,32}));
-    ////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
     // Αλλάξαμε το πλαίσιο ώστε να είναι πιο ακριβής η επαφή με τον παίκτη
     sf::FloatRect voltwingBounds({voltwingPos.x + 6.f, voltwingPos.y + 4.f}, {20.0f, 22.0f});
-    sf::FloatRect bitronBounds({bitron.getX(), bitron.getY()}, {32.0f, 32.0f});
 
-    if (bitronBounds.findIntersection(voltwingBounds) && !bitron.getDamageStatus())
+    if (bitronBounds.findIntersection(voltwingBounds) && !bitronIsDamaged)
     {
         return true;
     }
@@ -80,8 +78,8 @@ bool Voltwing::updateVoltwing(Bitron& bitron)
 
 }
 
-void Voltwing::drawVoltwing(sf::RenderWindow& window)
+void Voltwing::drawVoltwing(sf::RenderWindow* window)
 {
     voltwingSprite->setPosition({voltwingPos.x, voltwingPos.y});
-    window.draw(*voltwingSprite);
+    window->draw(*voltwingSprite);
 }

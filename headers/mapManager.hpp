@@ -1,9 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
 #include <cmath>
-#include <algorithm>
 #include <memory>
 
 #include "Globals.hpp"
@@ -18,7 +17,7 @@
 #include "Beamlok.hpp"
 #include "laser.hpp"
 #include "windowText.hpp"
-#define cellSize 64
+#include "Window.hpp"
 
 class windowText;
 class platform;
@@ -33,9 +32,9 @@ class laser;
 
 class mapManager
 {
+
     private:
         unsigned short currentMapIndex,currentMapHeight,currentMapWidth,coinCounter;
-
         float mapPixelWidth,mapPixelHeight,centerX,centerY;
 
         std::vector<std::vector<std::vector<Cell>>> mapPool;
@@ -44,26 +43,26 @@ class mapManager
         std::vector<std::unique_ptr<Voltwing>> voltwings;
         std::vector<std::unique_ptr<laser>> lasers;
         std::shared_ptr<Sounds> sound;
-        sf::Texture backgroundTexture;
-        std::unique_ptr<sf::Sprite> backgroundSprite;
         sf::Texture tilesetTexture;
         std::unique_ptr<sf::Sprite> tilesetSprite;
 
+        Bitron bitron;
+        Health health;
         
 
     public:
 
-        mapManager(std::shared_ptr<Sounds> sound,std::shared_ptr<windowText> text);
+        mapManager(Window* window);
 
-        std::shared_ptr<windowText> text;
-
-        // utils
+        // Utils
+        Window* window;
         void convertMap(std::vector<std::vector<unsigned char>> map);
-        void drawMap(sf::RenderWindow& window);
         std::array<Cell,4> mapCollision(sf::FloatRect bounds);
         std::vector<std::unique_ptr<Beamlok>> beamloks;
+        bool checkForTiles(short startX,short endX,short y);
+        bool projectileCollicion(short x,short y);
 
-        // Map filling
+        // Map filling functions
         void addCircularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool clockwise,float startAngle);
         void addLinearPlatform(sf::Vector2f startPos,sf::Vector2f endPos,float speed);
         void addCoin(float posX,float posY);
@@ -73,18 +72,44 @@ class mapManager
         // Update
         void nextMap();
         void checkPlatformCollision(sf::Sprite& platform);
-        void updateCamera(sf::RenderWindow& window,sf::View& view,float x,float y);
-        void updatePlatforms(Bitron& bitron);
-        void updateCoins(Bitron& bitron,Health& health);
-        void updateVoltwings(Bitron& bitron,Health& health);
-        void updateCoinsText(sf::View& view);
-        void updateBeamloks(Bitron& bitron,Health& health);
-        bool checkForTiles(short startX,short endX,short y);
-        bool projectileCollicion(short x,short y);
+        void updatePlatforms();
+        void updateCoins();
+        void updateVoltwings();
+        void updateBeamloks();
+        void updateBitron() { bitron.updateBitron(*this); }
+        void updateMapComponents();
+
+        // Draw
+        void drawMap(sf::RenderWindow* window,float centerX,float centerY);
+        void drawMapComponents();
 
         // Getters
         std::vector<std::vector<std::vector<Cell>>>& getMapPool(){return mapPool;}
         unsigned short getCurrentMapIndex() const {return currentMapIndex;}
         unsigned short getHeight()const{return currentMapHeight;}
         unsigned short getWidth()const{return currentMapWidth;}
+        unsigned short getMapPixelWidth()const{return mapPixelWidth;}
+        unsigned short getMapPixelHeight()const{return mapPixelHeight;}
+        bool checkHealth() const {return health.gameOver();}
+
+        void mapEventAssist(unsigned char event=1)
+        {
+            switch(event)
+            {
+                case 1:
+                    sound->playBackgroundMusic();
+                    break;
+                case 2:
+                    sound->stopBackgroundMusic();
+                    sound->playGameOver();
+                    bitron.setDeadSprite();
+                    break;
+                case 3:
+                    sound->stopBackgroundMusic();
+                    sound->playWin();
+                    break;
+                default:
+                    break;
+            }
+        }
 };

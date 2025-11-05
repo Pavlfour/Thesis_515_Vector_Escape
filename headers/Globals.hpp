@@ -1,5 +1,7 @@
 #pragma once
+#include <SFML/System/Vector2.hpp>
 
+constexpr const int cellSize = 64;
 constexpr const unsigned int windowWidth = 1280;
 constexpr const unsigned int windowHeight = 720;
 constexpr const sf::Vector2f coinSize{18.f,18.f};
@@ -13,4 +15,12 @@ enum Cell{
     RedTile,
     TriggerTile,
     ExitTile
+};
+
+enum GameState
+{
+    MainMenu = 1,
+    Running,
+    GameOver,
+    Finished
 };

@@ -2,12 +2,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
-#include "mapManager.hpp"
 #include "Sounds.hpp"
 #include "Health.hpp"
 #include "Globals.hpp"
+#include <algorithm>
 
 class mapManager;
+class Sounds;
 
 class Bitron
 {
@@ -33,8 +34,8 @@ class Bitron
 
         void bitronIsDamaged();
         void updateAnimation();
-        void updateBitron(mapManager& map,Health& health);
-        void drawBitron(sf::RenderWindow& window);
+        bool updateBitron(mapManager& map);
+        void drawBitron(sf::RenderWindow* window);
     
         // Getters
         float getX(){return x;}

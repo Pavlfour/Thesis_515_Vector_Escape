@@ -1,5 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 class windowText
 {
@@ -15,6 +16,8 @@ class windowText
             coinText->setOutlineColor(sf::Color::Black);
             coinText->setScale({0.8f,0.8f});
             coinText->setString("COINS:"+std::to_string(0));
+
+            setFirstMapText();
             
         }
 
@@ -75,16 +78,9 @@ class windowText
         }
 
 
-        // Getter
-        sf::Text& getStateText()
-        {
-            return *stateText;
-        }
-
-        sf::Text& getCoinText()
-        {
-            return *coinText;
-        }
+        // Getters
+        sf::Text& getStateText() const { return *stateText; }
+        sf::Text& getCoinText() const { return *coinText; }
 
     private:
         

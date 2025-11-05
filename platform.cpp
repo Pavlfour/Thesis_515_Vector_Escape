@@ -11,8 +11,8 @@ platform::platform()
     platformSprite = std::make_unique<sf::Sprite>(platformTexture);
 }
 
-void platform::drawPlatform(sf::RenderWindow& window)
+void platform::drawPlatform(sf::RenderWindow* window)
 {
     platformSprite->setPosition(platformPos);
-    window.draw(*platformSprite);
+    window->draw(*platformSprite);
 }

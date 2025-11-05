@@ -1,52 +1,17 @@
 #include "headers/Game.hpp"
 
 Game::Game():
-sound(std::make_shared<Sounds>()),
-text(std::make_shared<windowText>()),
-bitron(sound),
-map(sound,text),
-mainMenu(true),
-isTerminated(false),
-isFinished(false),
+map(&window),
 m_elapsed(0.f)
 {
     m_clock.restart();
     srand(time(nullptr));
-
-    view = sf::View({0,0},{viewSize.x,viewSize.y});
-
-    // Window module
-    window.create(sf::VideoMode({windowWidth,windowHeight}),"Vector Escape",sf::Style::Titlebar | sf::Style::Close);
-
-    // Icon
-    if(!icon.loadFromFile("assets/sprites/icon.png"))
-    {
-        throw std::runtime_error("Failed to load icon.png");
-    }
-    window.setIcon({icon.getSize().x, icon.getSize().y}, icon.getPixelsPtr());
-
-    // Main menu background
-    if(!mainMenuTexture.loadFromFile("assets/sprites/menu.png"))
-    {
-        throw std::runtime_error("Failed to load menu.png");
-    }
-    mainMenuSprite = std::make_unique<sf::Sprite>(mainMenuTexture);
-
-
 }
 
 bool Game::isRunning()
 {
-
-    while (const std::optional event = window.pollEvent())
-    {
-            
-        if (event->is<sf::Event::Closed>())
-        {
-            window.close();
-            return false;
-        }
-    }
+    if(window.windowIsDone())
+        return false;
 
     while (m_elapsed >= timestep)
     {
@@ -58,93 +23,61 @@ bool Game::isRunning()
     
     m_elapsed += m_clock.restart().asSeconds();
 
-    // Prevent "spiral of death"
-    if(m_elapsed > 0.25)
-        m_elapsed = 0.25;
-
     return true;
-
 }
 
 void Game::update()
 {
 
-    // Loser
-    if(isTerminated)
+    switch(gameState)
     {
-        return;
+        case GameState::MainMenu:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space))
+            {
+                gameState = Running;
+                map.mapEventAssist();
+            }
+            break;
+        case GameState::Running:
+            
+            if(map.checkHealth())
+            {
+                window.gameOver();
+                map.mapEventAssist(2);
+                gameState = GameOver;
+                return;
+            }
+            else if(map.getCurrentMapIndex() == 9)
+            {
+                window.winner();
+                map.mapEventAssist(3);
+                gameState = Finished;
+                return;
+            }
+            map.updateMapComponents();
+            break;
+        case GameState::GameOver:
+            break;
+        case GameState::Finished:
+            map.updateBitron();
+            break;
     }
-    // Main Menu
-    else if(mainMenu)
-    {
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space))
-        {
-            mainMenu = false;
-            text->setFirstMapText();
-            sound->playBackgroundMusic();
-        }
-
-        return;
-    }
-    // Game Over
-    else if(health.gameOver())
-    {
-        text->setGameOverText(view.getCenter().x - 205.f,view.getCenter().y - 128.f);
-        sound->stopBackgroundMusic();
-        isTerminated = true;
-        sound->playGameOver();
-        bitron.setDeadSprite();
-        return;
-    }
-    // Winner
-    else if(map.getCurrentMapIndex() == 9 && !isFinished)
-    {
-        text->setWinnerText(view.getCenter().x - 130.f,view.getCenter().y - 128.f);
-        sound->stopBackgroundMusic();
-        isFinished = true;
-        sound->playWin();
-        return;
-    }
-    
-
-
-
-    // Update first bitron for positioning the view correctly 
-    bitron.updateBitron(map,health);
-    map.updateCamera(window,view,bitron.getX(),bitron.getY());
-    // Update the rest componets
-    map.updatePlatforms(bitron);
-    map.updateCoins(bitron,health);
-    map.updateVoltwings(bitron,health);
-    map.updateCoinsText(view);
-    map.updateBeamloks(bitron,health);
-    health.updateHealth(view);
 
 }
 
 void Game::draw()
 {
+    window.beginDraw();
 
-    window.clear();
-
-    if(!mainMenu)
+    switch(gameState)
     {
-        
-        map.drawMap(window);
-        health.drawHealth(window);
-        bitron.drawBitron(window);
-        if(isTerminated || isFinished)
-        {
-            window.draw(text->getStateText());
-        }
-
-    }
-    else
-    {
-        window.draw(*mainMenuSprite);
-        window.draw(text->getStateText());
+        case GameState::MainMenu:
+            window.mainMenuDraw();
+            break;
+        default:
+            window.backgroundDraw();
+            map.drawMapComponents();
     }
 
-    window.display();
+    window.endDraw();
 }

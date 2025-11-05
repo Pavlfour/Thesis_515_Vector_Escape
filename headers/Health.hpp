@@ -1,5 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Globals.hpp"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 class Health
 {
@@ -11,7 +14,7 @@ class Health
 
     public:
         Health();
-        void drawHealth(sf::RenderWindow& window);
+        void drawHealth(sf::RenderWindow* window);
         void updateHealth(sf::View& view);
         void damageTaken();
 

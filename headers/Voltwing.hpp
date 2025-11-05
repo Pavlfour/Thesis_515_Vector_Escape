@@ -1,12 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "mapManager.hpp"
 #include "Globals.hpp"
-
-#include <memory>
-#include <vector>
-
-class Bitron;
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <cmath>
 
 class Voltwing
 {
@@ -22,15 +19,14 @@ class Voltwing
         sf::Vector2f voltwingPos;
         sf::Vector2f direction;
 
-        size_t currentTargetIndex;
+        unsigned char currentTargetIndex;
         std::vector<sf::Vector2f>pathPoints;
 
-        std::shared_ptr<Sounds> sound;
 
     public:
-        Voltwing(std::vector<sf::Vector2f> points, float speed,std::shared_ptr<Sounds> sound);
+        Voltwing(std::vector<sf::Vector2f> points, float speed);
 
-        bool updateVoltwing(Bitron& bitron);
-        void drawVoltwing(sf::RenderWindow& window);
+        bool updateVoltwing(const sf::FloatRect& bitronBounds,bool bitronIsDamaged);
+        void drawVoltwing(sf::RenderWindow* window);
 
 };

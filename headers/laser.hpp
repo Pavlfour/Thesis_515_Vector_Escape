@@ -1,10 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include "Globals.hpp"
 #include "mapManager.hpp"
-#include "Sounds.hpp"
-#include "Bitron.hpp"
-
-class Bitron;
 
 class mapManager;
 
@@ -14,13 +13,11 @@ class laser
         sf::Texture laserTexture;
         std::unique_ptr<sf::Sprite> laserSprite;      
         sf::Vector2f currentPos;
-        bool direction;
         float speed,totalDistance;
-        std::shared_ptr<Sounds> sound;
+        bool direction;
 
     public:
-        laser(bool direction,sf::Vector2f currentPos,std::shared_ptr<Sounds> sound);
-        void drawLaser(sf::RenderWindow& window);
-        bool updateLaser(mapManager* currentMap,Bitron& bitron,Health& health);
-
+        laser(bool direction,sf::Vector2f currentPos);
+        void drawLaser(sf::RenderWindow* window);
+        unsigned char updateLaser(mapManager* currentMap,bool bitronIsDamaged,const sf::FloatRect& bitronBounds);
 };

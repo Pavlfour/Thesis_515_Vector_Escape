@@ -1,5 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <cmath>
 
 class Bitron;
@@ -16,7 +18,7 @@ class platform
     public:
         platform();
         // Common methods
-        void drawPlatform(sf::RenderWindow& window);
+        void drawPlatform(sf::RenderWindow* window);
         virtual void platformUpdate(Bitron& bitron) = 0;
 
 };
