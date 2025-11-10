@@ -17,16 +17,16 @@ window(window)
     tilesetSprite = std::make_unique<sf::Sprite>(tilesetTexture);
 
     // Αρχικοποίηση των πιστών στην λίστα
-    convertMap(maps::map1);
-    convertMap(maps::map2);
-    convertMap(maps::map3);
-    convertMap(maps::map4);
-    convertMap(maps::map5);
-    convertMap(maps::map6);
-    convertMap(maps::map7);
-    convertMap(maps::map8);
-    convertMap(maps::map9);
-    convertMap(maps::map10);
+    convertMap("assets/maps/map1.txt");
+    convertMap("assets/maps/map2.txt");
+    convertMap("assets/maps/map3.txt");
+    convertMap("assets/maps/map4.txt");
+    convertMap("assets/maps/map5.txt");
+    convertMap("assets/maps/map6.txt");
+    convertMap("assets/maps/map7.txt");
+    convertMap("assets/maps/map8.txt");
+    convertMap("assets/maps/map9.txt");
+    convertMap("assets/maps/map10.txt");
 
     // Μόνο για την πρώτη πίστα
     currentMapHeight = mapPool[currentMapIndex].size();
@@ -68,38 +68,49 @@ void mapManager::addCoin(float posX,float posY)
 
 
 
-void mapManager::convertMap(std::vector<std::vector<unsigned char>> map)
+void mapManager::convertMap(const std::string& filename)
 {
     std::vector<std::vector<Cell>> convertedMap;
+    std::ifstream file(filename);
+    if(!file.is_open())
+    {
+        throw std::runtime_error("Failed to load " + filename);
+    }
 
-    for(const auto& row: map)
+    std::string line;
+    
+    while(std::getline(file,line))
     {
         std::vector<Cell> newRow;
-        for(const unsigned char tile: row)
+        for(const auto& character : line)
         {
-            switch (tile)
+            switch(character)
             {
-                case 1:
-                    newRow.push_back(BlueTile);
-                    break;
-                case 2:
-                    newRow.push_back(RedTile);
-                    break;
-                case 3:
-                    newRow.push_back(TriggerTile);
-                    break;
-                case 4:
-                    newRow.push_back(ExitTile);
-                    break;
-                default:
-                    newRow.push_back(Empty);
-                    break;
+                case ' ':
+                break;
+                case '0':
+                newRow.push_back(Empty);
+                break;
+                case '1':
+                newRow.push_back(BlueTile);
+                break;
+                case '2':
+                newRow.push_back(RedTile);
+                break;
+                case '3':
+                newRow.push_back(TriggerTile);
+                break;
+                case '4':
+                newRow.push_back(ExitTile);
+                break;
+
             }
         }
         convertedMap.push_back(newRow);
     }
 
     mapPool.push_back(convertedMap);
+
 }
 
 

@@ -19,6 +19,9 @@
 #include "windowText.hpp"
 #include "Window.hpp"
 
+#include <fstream>
+#include <sstream>
+
 class windowText;
 class platform;
 class circularPlatform;
@@ -56,7 +59,7 @@ class mapManager
 
         // Utils
         Window* window;
-        void convertMap(std::vector<std::vector<unsigned char>> map);
+        void convertMap(const std::string& filename);
         std::array<Cell,4> mapCollision(sf::FloatRect bounds);
         std::vector<std::unique_ptr<Beamlok>> beamloks;
         bool checkForTiles(short startX,short endX,short y);
