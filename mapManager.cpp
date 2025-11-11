@@ -106,10 +106,10 @@ void mapManager::convertMap(const std::string& filename)
 
             }
         }
-        convertedMap.push_back(newRow);
+        convertedMap.emplace_back(newRow);
     }
 
-    mapPool.push_back(convertedMap);
+    mapPool.emplace_back(convertedMap);
 
 }
 
