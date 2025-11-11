@@ -2,6 +2,8 @@
 CXX ?= g++
 INCLUDE = -I"../SFML-3.0.0/include" \
           -I"headers"
+
+# Search both SFML and MSYS2 library folders
 LIBDIR = -L"../SFML-3.0.0/lib"
 
 # === FILES ===
@@ -24,13 +26,13 @@ all: $(EXE)
 
 $(EXE): $(OBJ) $(RES)
 	$(CXX) $(OBJ) $(RES) -o $(EXE) $(CXXFLAGS) $(LDFLAGS)
-	rm -f $(OBJ)
+	del /Q $(OBJ) 2>nul
 
 %.o: %.cpp
 	$(CXX) -c $< -o $@ $(CXXFLAGS) $(INCLUDE)
 
 clean:
-	rm -f $(OBJ) $(EXE)
+	del /Q $(OBJ) $(EXE) 2>nul
 
 run: all
 	./$(EXE)
