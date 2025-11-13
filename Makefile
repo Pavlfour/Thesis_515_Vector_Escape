@@ -3,7 +3,7 @@ CXX ?= g++
 INCLUDE = -I"../SFML-3.0.0/include" \
           -I"headers"
 
-# Search both SFML and MSYS2 library folders
+# Search both SFML
 LIBDIR = -L"../SFML-3.0.0/lib"
 
 # === FILES ===
