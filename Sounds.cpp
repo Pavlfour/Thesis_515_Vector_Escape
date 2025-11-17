@@ -25,7 +25,7 @@ Sounds::Sounds()
     winSound = new sf::Sound(winBuffer);
 
     backgroundMusic.setLooping(true);
-    backgroundMusic.setVolume(20);
+    backgroundMusic.setVolume(40);
 
 }
 
