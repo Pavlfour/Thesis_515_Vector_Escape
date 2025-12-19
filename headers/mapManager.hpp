@@ -15,7 +15,6 @@
 #include "Voltwing.hpp"
 #include "Health.hpp"
 #include "Beamlok.hpp"
-#include "laser.hpp"
 #include "windowText.hpp"
 #include "Window.hpp"
 
@@ -31,7 +30,6 @@ class Voltwing;
 class Health;
 class Sounds;
 class Beamlok;
-class laser;
 
 class mapManager
 {
@@ -44,7 +42,6 @@ class mapManager
         std::vector<std::unique_ptr<platform>> platforms;
         std::vector<std::unique_ptr<coin>> coins;
         std::vector<std::unique_ptr<Voltwing>> voltwings;
-        std::vector<std::unique_ptr<laser>> lasers;
         std::shared_ptr<Sounds> sound;
         sf::Texture tilesetTexture;
         std::unique_ptr<sf::Sprite> tilesetSprite;
