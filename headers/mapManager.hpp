@@ -15,15 +15,12 @@
 #include "Voltwing.hpp"
 #include "Health.hpp"
 #include "Beamlok.hpp"
-#include "windowText.hpp"
 #include "Window.hpp"
 
 #include <fstream>
 #include <sstream>
 
-class windowText;
 class platform;
-class circularPlatform;
 class Bitron;
 class coin;
 class Voltwing;
