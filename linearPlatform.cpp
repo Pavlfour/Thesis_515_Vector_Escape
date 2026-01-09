@@ -3,8 +3,6 @@
 linearPlatform::linearPlatform(sf::Vector2f startPos,sf::Vector2f endPos,float speed)
 : platform()
 {
-    // Φιλική πλατφόρμα
-    
     this->speed = speed;
     this->startPos = startPos;
     this->platformPos = startPos;

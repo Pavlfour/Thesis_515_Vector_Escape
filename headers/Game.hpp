@@ -12,7 +12,7 @@ class Game
 
     private:
 
-        // FPS
+        // 60 FPS
         const float timestep = 1.0f / 60.0f;
         sf::Clock m_clock;
         float m_elapsed;

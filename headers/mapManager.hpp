@@ -7,7 +7,6 @@
 
 #include "Globals.hpp"
 #include "Sounds.hpp"
-#include "platform.hpp"
 #include "circularPlatform.hpp"
 #include "linearPlatform.hpp"
 #include "Bitron.hpp"
@@ -20,7 +19,6 @@
 #include <fstream>
 #include <sstream>
 
-class platform;
 class Bitron;
 class coin;
 class Voltwing;

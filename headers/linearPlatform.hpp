@@ -2,8 +2,6 @@
 #include "platform.hpp"
 #include "Bitron.hpp"
 
-// class Bitron;
-
 class linearPlatform : public platform
 {
 

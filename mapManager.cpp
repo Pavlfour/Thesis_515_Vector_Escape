@@ -326,7 +326,6 @@ void mapManager::updateBeamloks()
 
 void mapManager::updateMapComponents()
 {
-    // Unit under test
     if(bitron.updateBitron(*this))
         health.damageTaken();
 
