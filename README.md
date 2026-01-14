@@ -7,8 +7,12 @@ The version of SFML is 3.0.0 and i added 2 extra static libraries for the linker
 
 You can find the modified version: https://github.com/Pavlfour/SFML_Windows_Template/tree/main/Dependencies
 
+---
+
 ## 🎥 Demo
 - https://www.youtube.com/watch?v=kEjlSsu5dec
+
+---
 
 ## Class diagram in Visual Paradigm (function parameters not included for simplicity)
 
