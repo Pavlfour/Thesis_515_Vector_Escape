@@ -7,6 +7,8 @@ The version of SFML is 3.0.0 and i added 2 extra static libraries for the linker
 
 You can find the modified version: https://github.com/Pavlfour/SFML_Windows_Template/tree/main/Dependencies
 
+The SFML-3.0.0 folder should be in the same folder where you git clone the project (Thesis_515_Vector_Escape folder) in order for the Makefile to work.
+
 ---
 
 ## 🎥 Demo
