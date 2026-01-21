@@ -1,12 +1,13 @@
 #include "headers/circularPlatform.hpp"
 
 circularPlatform::circularPlatform(sf::Vector2f circleCenter, float radius, float speed,bool antiClockwise,float startAngle)
-:center(circleCenter),
-radius(radius),
+:
+platform(),
 speed(speed),
-antiClockwise(antiClockwise),
 angle(startAngle),
-platform()
+radius(radius),
+antiClockwise(antiClockwise),
+center(circleCenter)
 {
     platformPos = {center.x + radius * std::cos(angle), center.y + radius * std::sin(angle)};
     lastPos = platformPos;

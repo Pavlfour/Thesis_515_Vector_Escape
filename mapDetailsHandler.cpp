@@ -225,7 +225,6 @@ void addMapComponents(mapManager* currentMap)
                                    {27*cellSize+32.f,1*cellSize+32.f},
                                     2.0f);
             break;
-
         case 6:
             // Coins
             currentMap->addCoin(2*cellSize + 23, 13*cellSize +23);
@@ -247,7 +246,6 @@ void addMapComponents(mapManager* currentMap)
             currentMap->addCircularPlatform({13*cellSize,4*cellSize},3*cellSize,0.01f,true,0.0f);
             currentMap->addCircularPlatform({20*cellSize,3*cellSize},2*cellSize,0.01f,false,1.95f*M_PI/2.0f);
             break;
-        
         case 8:
             currentMap->addCircularPlatform({3*cellSize,22*cellSize},2*cellSize,0.01f,false,0.0f);
             currentMap->addCircularPlatform({6*cellSize,16*cellSize},3*cellSize,0.01f,false,1.95f*M_PI/2.0f);
@@ -341,6 +339,8 @@ void updateMapComponets(mapManager* currentMap,short x,short y)
                     currentMap->getMapPool()[currentMap->getCurrentMapIndex()][9][10] = Cell::Empty;
                 }
             }
+            break;
+
         case 7:
             static unsigned char progress = 0;
             if(currentMap->getMapPool()[currentMap->getCurrentMapIndex()][y][x] == Cell::TriggerTile)
@@ -532,6 +532,7 @@ void updateMapComponets(mapManager* currentMap,short x,short y)
                 }
             }
             break;
+
         case 8:
             if(currentMap->getMapPool()[currentMap->getCurrentMapIndex()][y][x] == Cell::TriggerTile)
             {
@@ -555,7 +556,7 @@ void updateMapComponets(mapManager* currentMap,short x,short y)
                 {
                     currentMap->addLinearPlatform({32*cellSize,20*cellSize},{45*cellSize,20*cellSize},0.7f);
                 }
-            break;
             }
+            break;
     }
 }

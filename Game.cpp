@@ -1,8 +1,8 @@
 #include "headers/Game.hpp"
 
 Game::Game():
-map(&window),
-m_elapsed(0.f)
+m_elapsed(0.f),
+map(&window)
 {
     m_clock.restart();
     srand(time(nullptr));

@@ -15,8 +15,8 @@ OBJ = $(SRC:.cpp=.o)
 RES = appicon.res
 EXE = VectorEscape.exe
 
-# compiler flags
-CXXFLAGS = -g -DSFML_STATIC -fdiagnostics-color=always
+# compiler flags (c++17 standard by default in minGW-w64)
+CXXFLAGS = -g -DSFML_STATIC -Wall -Wextra -Wpedantic -fdiagnostics-color=always
 
 # linker flags
 LDFLAGS = $(LIBDIR) \
@@ -29,7 +29,7 @@ LDFLAGS = $(LIBDIR) \
 all: $(EXE)
 
 $(EXE): $(OBJ) $(RES)
-	$(CXX) $(OBJ) $(RES) -o $(EXE) $(CXXFLAGS) $(LDFLAGS)
+	$(CXX) $(OBJ) $(RES) -o $(EXE) $(LDFLAGS)
 	del /Q $(OBJ) 2>nul
 
 %.o: %.cpp

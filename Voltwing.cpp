@@ -1,13 +1,13 @@
 #include "headers/Voltwing.hpp"
 
 Voltwing::Voltwing(std::vector<sf::Vector2f> points, float speed):
-pathPoints(std::move(points)),
 frameTimer(0.0f),
-currentFrame(0),
-currentTargetIndex(1),
-forward(true),
 speed(speed),
-animationIterator(0)
+currentFrame(0),
+animationIterator(0),
+forward(true),
+currentTargetIndex(1),
+pathPoints(std::move(points))
 {
     voltwingPos = pathPoints[0];
 

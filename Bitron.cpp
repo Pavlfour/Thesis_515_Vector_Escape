@@ -2,22 +2,21 @@
 #include "headers/mapManager.hpp"
 
 Bitron::Bitron(std::shared_ptr<Sounds> sound)
-:verticalSpeed(0.0f),
-isColliding(false),
+:verticalSpeed(0.f),
+frameTimer(0.f),
 onGround(false),
 keyPressed(true),
 isMoving(false),
 resetPosition(false),
 onPlatform(false),
+isColliding(false),
 advanceMap(true),
 isDamaged(false),
 currentFrame(0),
 animationIterator(0),
 damageIterator(0),
 sound(sound)
-
 {
-    frameTimer = 0.0f;
     
     if(!bitronTexture.loadFromFile("assets/sprites/Bitron.png"))
     {
