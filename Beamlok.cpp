@@ -73,7 +73,7 @@ unsigned char Beamlok::updateAnimation()
             if(animationIterator >= 30)
             {
                 temp = 1;
-                float offSetX = (forward) ? (beamlokPos.x + 28.f) : (beamlokPos.x - 6.f);
+                float offSetX = (forward) ? (beamlokPos.x + 24.f) : (beamlokPos.x - 2.f);
                 attackMode = false;
                 fire = false;
                 currentFrame = 0;
