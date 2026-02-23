@@ -16,6 +16,6 @@ The SFML-3.0.0 folder should be in the same folder where you git clone the proje
 
 ---
 
-## 📊 Class diagram in Visual Paradigm (function parameters not included for simplicity)
+## 📊 Class diagram in Visual Paradigm (function parameters and type not included for simplicity)
 
-<img width="4902" height="3039" alt="Class Diagram" src="https://github.com/user-attachments/assets/4dd87a8b-a468-4718-be95-883f94f59daa" />
+<img width="6536" height="4052" alt="Class Diagram1" src="https://github.com/user-attachments/assets/d7023bb3-36ce-45ce-8f63-838522d11d24" />
