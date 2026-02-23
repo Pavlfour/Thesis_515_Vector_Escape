@@ -16,7 +16,7 @@ class Window
         sf::Texture mainMenuTexture,backgroundTexture;
         std::unique_ptr<sf::Sprite> mainMenuSprite,backgroundSprite;
         float centerX, centerY;
-        bool isRunning;
+        bool isRunning,isFullScreen;
         std::unique_ptr<windowText> text;
 
     public:
@@ -54,6 +54,28 @@ class Window
         void updateCamera(float x,float y,unsigned short mapPixelWidth,unsigned short mapPixelHeight);
         void gameOver();
         void winner();
+        
+        // toggle fullscreen
+        void toggleFullScreen()
+        {
+
+            window.close();
+            if(isFullScreen)
+            {
+                // 1280x720
+                window.create(sf::VideoMode({windowWidth, windowHeight}),"Vector Escape",sf::Style::Titlebar | sf::Style::Close);
+            }
+            else
+            {
+                // fullscreen
+                const auto currentScreen = sf::VideoMode::getDesktopMode();
+                window.create(currentScreen, "Vector Escape", sf::Style::None);
+                window.setPosition({0,0});               
+            }
+            isFullScreen = !isFullScreen;
+            window.setIcon({icon.getSize().x, icon.getSize().y}, icon.getPixelsPtr());
+            window.setView(view);
+        }
 
         // Getters
         sf::View& getView() { return view; }

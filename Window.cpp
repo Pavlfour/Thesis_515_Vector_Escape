@@ -2,6 +2,7 @@
 
 Window::Window():
 isRunning(true),
+isFullScreen(false),
 text(std::make_unique<windowText>())
 {
     view = sf::View({0,0},{viewSize.x,viewSize.y});
@@ -56,6 +57,10 @@ void Window::backgroundDraw()
 
 void Window::mainMenuDraw()
 {
+    window.setView(window.getDefaultView());
+    const auto windowSize = window.getSize();
+    const auto textureSize = mainMenuTexture.getSize();
+    mainMenuSprite->setScale({static_cast<float>(windowSize.x)/textureSize.x,static_cast<float>(windowSize.y)/textureSize.y});
     window.draw(*mainMenuSprite);
 }
 

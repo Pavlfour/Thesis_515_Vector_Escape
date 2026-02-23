@@ -10,11 +10,28 @@ map(&window)
 
 bool Game::isRunning()
 {
+
+    static bool wasF5Pressed = false;
+
     if(window.windowIsDone())
         return false;
 
+    // debounce checked!
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::F5) && !wasF5Pressed)
+    {
+        // toggle fullscreen
+        window.toggleFullScreen();
+        wasF5Pressed = true;
+    }
+    else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::F5))
+    {
+        wasF5Pressed = false;
+    }
+
     while (m_elapsed >= timestep)
     {
+
+
         update();
         m_elapsed -= timestep;
     }
