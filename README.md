@@ -12,7 +12,7 @@ The SFML-3.0.0 folder should be in the same folder where you git clone the proje
 ---
 
 ## 🎥 Demo
-- https://www.youtube.com/watch?v=kEjlSsu5dec
+- [https://www.youtube.com/watch?v=kEjlSsu5dec](https://www.youtube.com/watch?v=hZ9T90Jvtjs)
 
 ---
 
