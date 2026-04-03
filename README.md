@@ -11,6 +11,11 @@ The SFML-3.0.0 folder should be in the same folder where you git clone the proje
 
 ---
 
+## 🎮 Controls
+<img width="829" height="292" alt="keyboard" src="https://github.com/user-attachments/assets/bf11dd4b-3104-43ce-b822-cf3e3a616def" />
+
+---
+
 ## 🎥 Demo
 - [https://www.youtube.com/watch?v=kEjlSsu5dec](https://www.youtube.com/watch?v=hZ9T90Jvtjs)
 
