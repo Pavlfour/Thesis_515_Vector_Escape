@@ -24,3 +24,17 @@ The SFML-3.0.0 folder should be in the same folder where you git clone the proje
 ## 📊 Class diagram in Visual Paradigm (function parameters and type not included for simplicity)
 
 <img width="6536" height="4052" alt="Class Diagram1" src="https://github.com/user-attachments/assets/d7023bb3-36ce-45ce-8f63-838522d11d24" />
+
+---
+
+## License
+
+This project is licensed under a Custom Non-Commercial License.
+
+You may view, download, study, play, and modify this project for personal,
+educational, or non-commercial use.
+
+You may not sell this game, sell modified versions, upload it to stores or
+marketplaces for money, use it in a commercial product, or claim it as your own.
+
+See the [LICENSE](LICENSE) file for details.
